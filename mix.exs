@@ -20,7 +20,7 @@ defmodule Builder.MixProject do
   defp deps do
     [
       {:earmark, "~> 1.4.9"},
-      {:yaml_elixir, "~> 2.4.0"},
+      {:yaml_elixir, "~> 2.5.0"},
       {:traverse, "~> 1.0.1"},
       {:phoenix_html, "~> 2.14.2"},
       {:credo, "~> 1.4.0", only: [:dev], runtime: false},

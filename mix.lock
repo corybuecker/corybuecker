@@ -11,6 +11,6 @@
   "plug": {:hex, :plug, "1.10.0", "6508295cbeb4c654860845fb95260737e4a8838d34d115ad76cd487584e2fc4d", [:mix], [{:mime, "~> 1.0", [hex: :mime, repo: "hexpm", optional: false]}, {:plug_crypto, "~> 1.1.1 or ~> 1.2", [hex: :plug_crypto, repo: "hexpm", optional: false]}, {:telemetry, "~> 0.4", [hex: :telemetry, repo: "hexpm", optional: true]}], "hexpm", "422a9727e667be1bf5ab1de03be6fa0ad67b775b2d84ed908f3264415ef29d4a"},
   "plug_crypto": {:hex, :plug_crypto, "1.1.2", "bdd187572cc26dbd95b87136290425f2b580a116d3fb1f564216918c9730d227", [:mix], [], "hexpm", "6b8b608f895b6ffcfad49c37c7883e8df98ae19c6a28113b02aa1e9c5b22d6b5"},
   "traverse": {:hex, :traverse, "1.0.1", "5e9b04428e1a82a7de8857ffeecdc37afc94cd702140690c4de2a5e68cbc483d", [:mix], [], "hexpm", "0cf9ec9a974caf36d2d70476af88f6fda469c5d1c08e6341c5cf517b02e01c71"},
-  "yamerl": {:hex, :yamerl, "0.7.0", "e51dba652dce74c20a88294130b48051ebbbb0be7d76f22de064f0f3ccf0aaf5", [:rebar3], [], "hexpm", "cb5a4481e2e2ad36db83bd9962153e1a9208e2b2484185e33fc2caac6a50b108"},
-  "yaml_elixir": {:hex, :yaml_elixir, "2.4.0", "2f444abc3c994c902851fde56b6a9cb82895c291c05a0490a289035c2e62ae71", [:mix], [{:yamerl, "~> 0.7", [hex: :yamerl, repo: "hexpm", optional: false]}], "hexpm", "4e25a6d5c873e393689c6f1062c5ec90f6cd1be2527b073178ae37eae4c78bee"},
+  "yamerl": {:hex, :yamerl, "0.8.0", "8214cfe16bbabe5d1d6c14a14aea11c784b9a21903dd6a7c74f8ce180adae5c7", [:rebar3], [], "hexpm", "010634477bf9c208a0767dcca89116c2442cf0b5e87f9c870f85cd1c3e0c2aab"},
+  "yaml_elixir": {:hex, :yaml_elixir, "2.5.0", "45de762be6d75fa5a8b5f44ddff8c30f64c26526eab5b1d72e36d616007b7796", [:mix], [{:yamerl, "~> 0.7", [hex: :yamerl, repo: "hexpm", optional: false]}], "hexpm", "80fe4e43f05582f2a90f2dcd73fc6171fbd65f2e6836f71fe4ce2154ef358c36"},
 }
