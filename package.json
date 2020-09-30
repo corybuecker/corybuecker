@@ -2,7 +2,7 @@
   "private": true,
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.3.0",
-    "@typescript-eslint/parser": "^4.1.1",
+    "@typescript-eslint/parser": "^4.3.0",
     "compression-webpack-plugin": "^6.0.2",
     "copy-webpack-plugin": "^6.1.1",
     "core-js": "^3.6.5",
