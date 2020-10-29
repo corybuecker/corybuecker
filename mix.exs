@@ -23,7 +23,7 @@ defmodule Builder.MixProject do
       {:yaml_elixir, "~> 2.5.0"},
       {:traverse, "~> 1.0.1"},
       {:phoenix_html, "~> 2.14.2"},
-      {:credo, "~> 1.4.0", only: [:dev], runtime: false},
+      {:credo, "~> 1.5.0", only: [:dev], runtime: false},
       {:dialyxir, "~> 1.0.0", only: [:dev], runtime: false}
     ]
   end
