@@ -6,7 +6,7 @@
     "compression-webpack-plugin": "^7.1.0",
     "copy-webpack-plugin": "^7.0.0",
     "core-js": "^3.8.0",
-    "css-loader": "^5.0.1",
+    "css-loader": "^5.0.2",
     "eslint": "^7.19.0",
     "front-matter": "^4.0.2",
     "marked": "^2.0.0",
