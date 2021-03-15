@@ -15,7 +15,7 @@
     "node-sass": "^5.0.0",
     "prismjs": "^1.22.0",
     "sass-loader": "^11.0.1",
-    "ts-loader": "^8.0.17",
+    "ts-loader": "^8.0.18",
     "typescript": "^4.2.3",
     "webpack": "^5.25.1",
     "webpack-cli": "^4.2.0",
