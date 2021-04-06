@@ -1,6 +1,7 @@
 ---
 title: Setting up Dovecot for IMAP and email submission on Kubernetes (K8s)
 published: 2021-04-05T13:03:27Z
+revised: 2021-04-06T13:22:04Z
 draft: false
 preview: Since Dovecot is my IMAP, LMTP and submission (authorized relay for outgoing email) service, I started there.
 description: Since Dovecot is my IMAP, LMTP and submission (authorized relay for outgoing email) service, I started there.
@@ -45,7 +46,7 @@ Since Dovecot is my IMAP, LMTP and submission (authorized relay for outgoing ema
 
 Fist, set up some logging to `stdout`. This works well with K8s and Docker as most logging is passed from a container's `stdout` to a central log service.
 
-```plain
+```bash
 # log everything to stdout
 auth_debug = yes
 auth_verbose_passwords = sha1
@@ -57,7 +58,7 @@ verbose_ssl = yes
 
 Next, enable all three protocols. LMTP is perhaps the most unusual setting. The Local Mail Transfer Protocol (LMTP) allows Postfix to pass email to Dovecot and require an immidiate success or failure message. In my case, it means that Postfix can pass mail to Dovecot without writing it to disk. Dovecot becomes the single gatekeeper of incoming email. This allows advanced plugins like Sieve to be used for incoming email.
 
-```plain
+```bash
 # IMAP for accessing email
 # LTMP so that Postfix can forward SMTP mail to Dovecot
 # Submission so that an authenticated user can forward to Sendgrid
@@ -73,7 +74,7 @@ service lmtp {
 
 Next up is [SSL configuration](https://doc.dovecot.org/configuration_manual/dovecot_ssl_configuration/#dovecot-ssl-configuration). For local testing, I've included a self-signed certificate generator that works well for most cases. For a real mail server, a service like Let's Encrypt works extremely well. Just remember to always change the key permissions to `400`.
 
-```plain
+```bash
 # this configuration REQUIRES SSL, which isn't usable if a client only supports STARTTLS
 ssl = required
 
@@ -84,7 +85,9 @@ ssl_key = </etc/ssl/dovecot/server.key
 
 Because of my simple use-case, I only need a single user for authentication! That makes [the `passwd-file` database](https://doc.dovecot.org/configuration_manual/authentication/passwd_file/#authentication-passwd-file) ideal and very simple to implement. Dovecot even supports [multiple encryption schemes](https://doc.dovecot.org/configuration_manual/authentication/password_schemes/#authentication-password-schemes), including Argon2.
 
-```plain
+An [example of a password file](https://github.com/corybuecker/k8s-mail/blob/main/volumes/dovecot_password_file) is in the Github repository for this project.
+
+```bash
 passdb {
   driver = passwd-file
   args = /etc/dovecot/private/dovecot_password.file
@@ -103,7 +106,7 @@ One undocumented detail that I ran into is the SSL requirements of the submissio
 
 Please see [Integrating with the SMTP API](https://sendgrid.com/docs/for-developers/sending-email/integrating-with-the-smtp-api/) for more information about configuring Sendgrid.
 
-```plain
+```bash
 hostname = mail.example.com
 submission_relay_host = # see https://sendgrid.com/docs/for-developers/sending-email/integrating-with-the-smtp-api/
 submission_relay_port = # see https://sendgrid.com/docs/for-developers/sending-email/integrating-with-the-smtp-api/
@@ -114,7 +117,7 @@ submission_relay_ssl = smtps
 
 The last setting for Dovecot is a [directive to put all mail in a `mail` subdirectory](https://doc.dovecot.org/configuration_manual/mail_location/#mail-location-settings) of the user's home folder. Remember that this is not the dovecot user, but the default home setting in the `userdb`, i.e. `/home/me@example.com/mail`.
 
-```plain
+```bash
 mail_location = maildir:~/mail
 ```
 
