@@ -1,22 +1,11 @@
 {
-  "editor.tabSize": 2,
-  "search.useGlobalIgnoreFiles": true,
-  "editor.wordWrap": "on",
-  "editor.renderWhitespace": "all",
   "editor.fontFamily": "Fira Code",
-  "editor.fontSize": 12,
   "editor.fontLigatures": true,
-  "insertDateString.format": "iso",
-  "insertDateString.formatDate": "iso",
-  "insertDateString.formatTime": "iso",
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true
-  },
+  "editor.fontSize": 12,
   "editor.formatOnSave": true,
-  "cSpell.words": [
-    "exlytics",
-    "kubernetes",
-    "pageview",
-    "record"
-  ]
+  "editor.renderWhitespace": "all",
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "insertDateString.format": "iso",
+  "search.useGlobalIgnoreFiles": true,
 }

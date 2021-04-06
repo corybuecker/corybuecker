@@ -3,10 +3,8 @@ import './styles.scss'
 class LoadComments extends HTMLElement {
   constructor() {
     super()
-  }
 
-  connectedCallback() {
-    this.loadComments()
+    this.addEventListener('click', this.loadComments)
   }
 
   loadComments() {
@@ -21,6 +19,8 @@ class LoadComments extends HTMLElement {
     const commentoScript = document.createElement('script')
     commentoScript.src = 'https://commento.corybuecker.com/js/commento.js'
     this.parentNode.appendChild(commentoScript)
+
+    this.remove()
   }
 }
 

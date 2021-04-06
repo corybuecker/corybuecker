@@ -30,7 +30,7 @@ class TrackedAnchor extends HTMLElement {
 
     anchor.addEventListener('click', this.handleTrackedAnchorClick)
   }
-  
+
   handleTrackedAnchorClick(event: Event): undefined {
     if (event.currentTarget instanceof HTMLAnchorElement === false) {
       return
