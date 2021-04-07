@@ -85,7 +85,7 @@ ssl_key = </etc/ssl/dovecot/server.key
 
 Because of my simple use-case, I only need a single user for authentication! That makes [the `passwd-file` database](https://doc.dovecot.org/configuration_manual/authentication/passwd_file/#authentication-passwd-file) ideal and very simple to implement. Dovecot even supports [multiple encryption schemes](https://doc.dovecot.org/configuration_manual/authentication/password_schemes/#authentication-password-schemes), including Argon2.
 
-An [example of a password file](https://github.com/corybuecker/k8s-mail/blob/main/volumes/dovecot_password_file) is in the Github repository for this project.
+An [example of a password file](https://github.com/corybuecker/k8s-mail/blob/main/volumes/dovecot_password_file) is in the GitHub repository for this project.
 
 ```bash
 passdb {
@@ -121,4 +121,4 @@ The last setting for Dovecot is a [directive to put all mail in a `mail` subdire
 mail_location = maildir:~/mail
 ```
 
-As I mentioned earlier, all of this is [published on Github](https://github.com/corybuecker/k8s-mail). The Docker Compose file also simulates the K8s environment. The tests can be run with Python out of the box.
+As I mentioned earlier, all of this is [published on GitHub](https://github.com/corybuecker/k8s-mail). The Docker Compose file also simulates the K8s environment. The tests can be run with Python out of the box.
