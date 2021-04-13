@@ -1,7 +1,7 @@
 ---
 title: Setting up Dovecot for IMAP and email submission on Kubernetes (K8s)
 published: 2021-04-05T13:03:27Z
-revised: 2021-04-06T13:22:04Z
+revised: 2021-04-13T13:25:45Z
 draft: false
 preview: Since Dovecot is my IMAP, LMTP and submission (authorized relay for outgoing email) service, I started there.
 description: Since Dovecot is my IMAP, LMTP and submission (authorized relay for outgoing email) service, I started there.
@@ -58,6 +58,8 @@ verbose_ssl = yes
 
 Next, enable all three protocols. LMTP is perhaps the most unusual setting. The Local Mail Transfer Protocol (LMTP) allows Postfix to pass email to Dovecot and require an immidiate success or failure message. In my case, it means that Postfix can pass mail to Dovecot without writing it to disk. Dovecot becomes the single gatekeeper of incoming email. This allows advanced plugins like Sieve to be used for incoming email.
 
+The non-SSL IMAP service on port 143 is explitly disabled.
+
 ```bash
 # IMAP for accessing email
 # LTMP so that Postfix can forward SMTP mail to Dovecot
@@ -69,6 +71,12 @@ service lmtp {
       address = 0.0.0.0
       port = 24
    }
+}
+
+service imap-login {
+  inet_listener imap {
+    port = 0
+  }
 }
 ```
 
