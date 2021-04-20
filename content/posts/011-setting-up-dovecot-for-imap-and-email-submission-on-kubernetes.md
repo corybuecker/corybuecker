@@ -1,7 +1,7 @@
 ---
 title: Setting up Dovecot for IMAP and email submission on Kubernetes (K8s)
 published: 2021-04-05T13:03:27Z
-revised: 2021-04-13T13:25:45Z
+revised: 2021-04-20T13:31:52Z
 draft: false
 preview: Since Dovecot is my IMAP, LMTP and submission (authorized relay for outgoing email) service, I started there.
 description: Since Dovecot is my IMAP, LMTP and submission (authorized relay for outgoing email) service, I started there.
@@ -10,13 +10,13 @@ slug: setting-up-dovecot-for-imap-and-email-submission-on-kubernetes
 
 This is the third part in a series aimed at setting up a mail server in Kubernetes (K8s). I recommend reading the first part for [setting up networking in Kubernetes](/post/configuring-kubernetes-and-nginx-ingress-for-a-mail-server) and the second part for [setting up a Network File System (NFS) on Kubernetes](/post/setting-up-network-file-system-nfs-on-kubernetes).
 
+I [published the scripts](https://github.com/corybuecker/k8s-mail) I started with to build and test the configuration as you go, all in the safety of your local development environment.
+
 ## A word of warning
 
 Dovecot and Postfix can be _dangerous_ if misconfigured. The risks run from open relaying, where a malicious party forwards spam through your mail server, to unauthorized access of your email.
 
-A core reason for setting these tools up in Kubernetes is that I wanted to study each setting and its impact on deliverability and security. Please take the time to do the same, and do not copy settings verbatim from anywhere.
-
-I [published the scripts](https://github.com/corybuecker/k8s-mail) I started with to build and test the configuration as you go, all in the safety of your local development environment.
+A core reason for setting these tools up in Kubernetes is that I wanted to study each setting and its impact on deliverability and security. Please take the time to do the same; do not copy settings verbatim from anywhere, including my scripts above.
 
 ## Use case
 
