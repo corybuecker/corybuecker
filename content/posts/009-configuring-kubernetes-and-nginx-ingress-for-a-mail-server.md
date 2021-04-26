@@ -1,6 +1,7 @@
 ---
 title: Configuring Kubernetes and NGINX Ingress for a mail server
 published: 2021-01-03T17:25:39Z
+revised: 2021-04-26T00:21:47Z
 draft: false
 preview: This is the first of a four-part series aimed at setting up a mail server in Kubernetes (K8s). Mail server software has always confused me. I am approaching this as a learning experience.
 description: Configuring Kubernetes and NGINX Ingress for a mail server
@@ -41,7 +42,7 @@ This is also supported by the NGINX ingress without any extra work. The [PROXY s
 ```yaml
 tcp:
   993: "default/dovecot:993"
-  587: "default/postfix:587::PROXY"
+  587: "default/postfix:587"
   25: "default/postfix:25::PROXY"
 ```
 
@@ -62,7 +63,7 @@ In this case, `ingress-configuration.yaml` is this file:
 ```yaml
 tcp:
   993: "default/dovecot:993"
-  587: "default/postfix:587::PROXY"
+  587: "default/postfix:587"
   25: "default/postfix:25::PROXY"
 controller:
   kind: DaemonSet
