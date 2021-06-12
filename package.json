@@ -30,6 +30,6 @@
   },
   "devDependencies": {
     "serve": "^11.3.2",
-    "watch": "^0.13.0"
+    "watch": "^1.0.2"
   }
 }
