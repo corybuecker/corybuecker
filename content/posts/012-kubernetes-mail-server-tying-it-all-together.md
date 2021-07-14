@@ -17,7 +17,7 @@ In this post, I will walk through the configuratin of Postfix and share the comp
 
 Compared to Dovecot, setting up Postfix is relatively simple. Part of this simplicity is due to using Dovecot as the submission server, along with Sendgrid. Additionally, Dovecot is an LMTP service for Postfix, so the entire Postfix configuration in `/etc/postfix/main.cf` becomes:
 
-```nginx
+```bash
 # Log everything to standard out
 maillog_file = /dev/stdout
 
