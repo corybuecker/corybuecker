@@ -1,10 +1,11 @@
 ---
-title: Running a mail server in Kubernetes (K8s), tying it all together
-published: 2021-07-13T13:00:53Z
+description: It has been some time since I started this project, but in this post I tie up all the parts of running a mail server in Kubernetes (K8s).
 draft: false
 preview: It has been some time since I started this project, but in this post I tie up all the parts of running a mail server in Kubernetes (K8s).
-description: It has been some time since I started this project, but in this post I tie up all the parts of running a mail server in Kubernetes (K8s).
+published: 2021-07-13T13:00:53Z
+revised: 2021-07-18T14:57:30Z
 slug: running-a-mail-server-in-kubernetes-k8s-tying-it-all-together
+title: Running a mail server in Kubernetes (K8s), tying it all together
 ---
 
 It has been some time since I started this project, but in this post I tie up all the parts of running a mail server in Kubernetes (K8s). I highly recommend reading the first three posts, if you have not already.
@@ -15,14 +16,25 @@ It has been some time since I started this project, but in this post I tie up al
 
 In this post, I will walk through the configuratin of Postfix and share the complete configuration in the form of Kubernetes configuration files.
 
+# Docker image
+
+The entire Dockerfile for Postfix is:
+
+```docker
+FROM alpine:3
+
+RUN apk --no-cache add postfix openssl bash
+COPY main.cf virtual /etc/postfix/
+COPY startup.sh /usr/bin/
+
+CMD ["startup.sh"]
+```
+
 Compared to Dovecot, setting up Postfix is relatively simple. Part of this simplicity is due to using Dovecot as the submission server, along with Sendgrid. Additionally, Dovecot is an LMTP service for Postfix, so the entire Postfix configuration in `/etc/postfix/main.cf` becomes:
 
-```bash
+```plain
 # Log everything to standard out
 maillog_file = /dev/stdout
-
-# Set this to your mail server's public IP address (loadbalancer). This is part of the client IP presevation I mention in the first post.
-proxy_interfaces = 1.2.3.4
 
 # this setting has several side-effects, e.g. the domain of this mail
 # server is now example.com, http://www.postfix.org/postconf.5.html#mydomain
@@ -31,17 +43,32 @@ myhostname = mail.example.com
 # disable all compatibility levels
 compatibility_level = 9999
 
+# Configure Postfix to expect the proxy protocol, since traffic on port 25 proxied through the NGINX ingress.
+smtpd_upstream_proxy_protocol = haproxy
+
 virtual_mailbox_domains = example.com
 virtual_mailbox_maps = lmdb:/etc/postfix/virtual
 virtual_alias_maps = lmdb:/etc/postfix/virtual
 virtual_transport = lmtp:dovecot.default.svc.cluster.local:24
-
 ```
 
 In the `/etc/postfix/virtual` file, I map the entire domains to a single address.
 
-```bash
+```plain
 @example.com me@example.com
+```
+
+The startup script is needed to compile the virtual database and then replace the running process with `postfix`.
+
+```bash
+#!/bin/bash
+
+set -ex
+
+newaliases
+postmap /etc/postfix/virtual
+
+exec postfix start-fg
 ```
 
 At this point, all the pieces of running a mail server in Kubernetes are complete. I frequently prefer looking at code, so all four of these posts have been codifed into [corybuecker/k8s-mail](https://github.com/corybuecker/k8s-mail). Please take the time to understand each setting; do not copy settings verbatim from anywhere, including my scripts above.
