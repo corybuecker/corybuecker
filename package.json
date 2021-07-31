@@ -25,11 +25,9 @@
   "scripts": {
     "builder:compile": "npx tsc",
     "builder:run": "node dist/compile_markdown.js",
-    "compile": "npm run builder:compile && npx webpack -c webpack.dev.config.js && npm run builder:run",
-    "watch_fe": "watch 'npm run compile' ./src ./content ./templates"
+    "compile": "npm run builder:compile && npx webpack -c webpack.dev.config.js && npm run builder:run"
   },
   "devDependencies": {
-    "serve": "^12.0.0",
-    "watch": "^1.0.2"
+    "serve": "^12.0.0"
   }
 }
