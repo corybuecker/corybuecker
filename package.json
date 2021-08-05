@@ -10,7 +10,7 @@
     "eslint": "^7.22.0",
     "front-matter": "^4.0.2",
     "marked": "^2.0.7",
-    "mini-css-extract-plugin": "^2.1.0",
+    "mini-css-extract-plugin": "^2.2.0",
     "mustache": "^4.0.1",
     "node-sass": "^6.0.0",
     "prismjs": "^1.22.0",
