@@ -9,7 +9,7 @@
     "css-loader": "^6.0.0",
     "eslint": "^7.22.0",
     "front-matter": "^4.0.2",
-    "marked": "^2.0.7",
+    "marked": "^3.0.0",
     "mini-css-extract-plugin": "^2.1.0",
     "mustache": "^4.0.1",
     "node-sass": "^6.0.0",
