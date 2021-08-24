@@ -1,15 +1,15 @@
 {
   "private": true,
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.1",
     "compression-webpack-plugin": "^8.0.0",
     "copy-webpack-plugin": "^9.0.0",
-    "core-js": "^3.14.0",
+    "core-js": "^3.16.2",
     "css-loader": "^6.0.0",
     "eslint": "^7.22.0",
     "front-matter": "^4.0.2",
-    "marked": "^3.0.0",
+    "marked": "^3.0.1",
     "mini-css-extract-plugin": "^2.1.0",
     "mustache": "^4.0.1",
     "node-sass": "^6.0.0",
@@ -17,7 +17,7 @@
     "sass-loader": "^12.1.0",
     "ts-loader": "^9.1.2",
     "typescript": "^4.3.2",
-    "webpack-cli": "^4.7.2",
+    "webpack-cli": "^4.8.0",
     "webpack-manifest-plugin": "^4.0.2",
     "webpack-merge": "^5.4.0",
     "webpack": "^5.50.0"
