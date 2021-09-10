@@ -20,7 +20,7 @@
     "webpack-cli": "^4.8.0",
     "webpack-manifest-plugin": "^4.0.2",
     "webpack-merge": "^5.4.0",
-    "webpack": "^5.51.1"
+    "webpack": "^5.52.1"
   },
   "scripts": {
     "builder:compile": "npx tsc",
