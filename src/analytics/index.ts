@@ -1,6 +1,6 @@
 import { EXLYTICS_URL, EXLYTICS_ACCOUNT } from './constants'
 
-const recordPageview = (): boolean => {
+const recordPageview = (): undefined => {
   const analyticsUrl = new URL(EXLYTICS_URL)
   const pageUrl = new URL(window.location.toString())
   const data = {
@@ -8,7 +8,8 @@ const recordPageview = (): boolean => {
     page: pageUrl.pathname
   }
 
-  return navigator.sendBeacon(analyticsUrl.toString(), JSON.stringify(data))
+  return
+  //navigator.sendBeacon(analyticsUrl.toString(), JSON.stringify(data))
 }
 
 recordPageview()
@@ -43,7 +44,7 @@ class TrackedAnchor extends HTMLElement {
       click_link: target.href
     }
 
-    navigator.sendBeacon(analyticsUrl.toString(), JSON.stringify(data))
+    //navigator.sendBeacon(analyticsUrl.toString(), JSON.stringify(data))
   }
 }
 
