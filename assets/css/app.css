@@ -1,0 +1,84 @@
+@import "./normalize.css";
+@import url("https://fonts.googleapis.com/css?family=Oswald|Roboto|Ubuntu+Mono&display=swap");
+h1 {
+    font-family: "Oswald", sans-serif;
+}
+
+h1 a {
+    font-family: "Oswald", sans-serif;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+p,
+a,
+h2,
+h3,
+li {
+    font-family: "Roboto", sans-serif;
+}
+
+p {
+    line-height: 1.4;
+}
+
+a:visited {
+    color: #00e;
+}
+
+a:focus,
+a:hover {
+    text-decoration: none;
+    color: #00b;
+}
+
+.container .content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container header {
+    flex-grow: 1;
+    flex-basis: 9rem;
+    padding: 1rem;
+}
+
+.container header nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.container header nav tracked-anchor:first-of-type {
+    flex: 0 0 100%;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+
+.container header nav tracked-anchor:first-of-type a {
+    color: #000;
+    font-size: x-large;
+    text-decoration: none;
+}
+
+.container header nav tracked-anchor:first-of-type a:hover {
+    text-decoration: underline;
+}
+
+.container main {
+    flex-grow: 5;
+    flex-basis: 45rem;
+    padding: 1rem;
+    min-width: 0;
+}
+
+.container main .wrapper h1:first-of-type {
+    margin-top: 0;
+}
+
+.container main .older-posts p:first-of-type {
+    font-size: x-large;
+}

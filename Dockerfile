@@ -1,13 +1,26 @@
-FROM node:16.2.0-alpine AS builder
+FROM elixir:alpine
+LABEL maintainer="Cory Buecker <email@corybuecker.com>"
 
-COPY . /app
+ENV MIX_ENV=prod
+
+RUN mix local.rebar --force
+RUN mix local.hex --force
+
+COPY mix.exs mix.lock /app/
+
 WORKDIR /app
-RUN npm install --production
-RUN npx webpack --config webpack.production.config.js
-RUN npx tsc
-RUN node dist/compile_markdown.js
 
-FROM nginx:mainline-alpine
+RUN mix deps.get
+RUN mix deps.compile
 
-COPY --from=builder /app/output/ /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY config /app/config
+COPY lib /app/lib
+
+RUN mix compile
+
+COPY assets /app/assets
+COPY priv /app/priv
+
+RUN mix assets.deploy
+
+CMD ["mix", "phx.server"]

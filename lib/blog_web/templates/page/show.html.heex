@@ -1,0 +1,14 @@
+<h1><%= @page.title %></h1>
+<p>
+  <time datetime={@page.published_at}><%= @page.published_at %></time>
+  <%= if @page.revised_at do %>
+    (<time datetime={@page.revised_at}><%= @page.revised_at %></time>)
+  <% end %>
+</p>
+<%= raw(compiled_body(@page.body)) %>
+<%= if length(@pages)>0 do %>
+  <h2>Older posts</h2>
+  <%= for older_page <- @pages do %>
+    <p><tracked-anchor><a href={Routes.page_path(BlogWeb.Endpoint, :show, older_page.slug)}><%= older_page.title %></a></tracked-anchor></p>
+  <% end %>
+<% end %>
