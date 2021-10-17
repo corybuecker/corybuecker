@@ -1,4 +1,5 @@
 @import "./normalize.css";
+@import "./prism.css";
 @import url("https://fonts.googleapis.com/css?family=Oswald|Roboto|Ubuntu+Mono&display=swap");
 h1 {
     font-family: "Oswald", sans-serif;
