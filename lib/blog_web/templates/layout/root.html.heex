@@ -10,7 +10,7 @@
     
     <%= if assigns[:page] do %>
       <meta name="description" content={@page.description} />
-      <title>Cory Buecker - <%= @page.title %></title>
+      <title><%= @page.title %> - Cory Buecker</title>
     <% end %>
     
     <link rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")} />
