@@ -19,7 +19,7 @@ defmodule BlogWeb.Router do
     pipe_through(:enforced_ssl)
 
     get("/", PageController, :index)
-    get("/:slug", PageController, :show)
+    get("/post/:slug", PageController, :show)
   end
 
   # Other scopes may use custom stacks.
