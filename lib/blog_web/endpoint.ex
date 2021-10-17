@@ -13,8 +13,8 @@ defmodule BlogWeb.Endpoint do
   plug Plug.Static,
     at: "/",
     from: :blog,
-    gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt)
+    gzip: true,
+    only: ~w(assets images favicon.ico robots.txt site.webmanifest)
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
   # Code reloading can be explicitly enabled under the
