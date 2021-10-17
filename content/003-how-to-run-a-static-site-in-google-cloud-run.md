@@ -13,7 +13,7 @@ The simplest solution that also yields a significant amount of control is hostin
 
 First, follow the Cloud SDK [Quickstart guide](https://cloud.google.com/sdk/docs/quickstarts) for your platform.
 
-## onfigure Docker for Container Registry
+## Configure Docker for Container Registry
 
 Because I am using the fully managed version of Cloud Run, I can [only run containers from Cloud Registry](https://cloud.google.com/run/docs/deploying) images. This is very inexpensive, so I didn't mind.
 
@@ -23,7 +23,7 @@ I did have to configure my local Docker daemon with authentication to push to th
 gcloud auth configure-docker
 ```
 
-### eate a Dockerfile
+## Create a Dockerfile
 
 Create a simple Dockerfile in the root directory that will install Node packages in a builder step before compiling the blog content. This makes caching of each build step much faster.
 
@@ -49,7 +49,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 It's optional, but I highly recommend using a `.dockerignore` file to prevent `node_modules` and other large, unneeded directories from being loaded into the Docker build context.
 
-#### ate a NGINX configuration
+## Create a NGINX configuration
 
 Place an `nginx.conf` file in the root directory of your project. Be sure to change the `server_name` directive to match your domain.
 
@@ -77,7 +77,7 @@ server {
 }
 ```
 
-## ## te and push the Docker image
+## Create and push the Docker image
 
 Create the Docker image, tagging it for storage in [Google's Container Registry](https://cloud.google.com/container-registry/docs/).
 
@@ -91,7 +91,7 @@ Push the image to the registry.
 docker push gcr.io/PROJECT-ID/image:latest
 ```
 
-## D## y to Cloud Run
+## Deploy to Cloud Run
 
 Deploy the new image to Cloud Run. Substitute your service name and the image name created above.
 
