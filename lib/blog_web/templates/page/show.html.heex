@@ -2,7 +2,7 @@
 <p>
   <time datetime={@page.published_at}><%= @page.published_at %></time>
   <%= if @page.revised_at do %>
-    (<time datetime={@page.revised_at}><%= @page.revised_at %></time>)
+    (revised on <time datetime={@page.revised_at}><%= @page.revised_at %></time>)
   <% end %>
 </p>
 <%= raw(compiled_body(@page.body)) %>
