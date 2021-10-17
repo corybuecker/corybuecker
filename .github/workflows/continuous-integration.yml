@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - ci-test
 
 jobs:
   build:
@@ -15,8 +14,17 @@ jobs:
 
       - uses: google-github-actions/setup-gcloud@master
         with:
-          project_id: ${{ secrets.PROJECT_ID }}
+          project_id: bueckered-272522
           service_account_key: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
           export_default_credentials: true
 
-      - run: gcloud auth configure-docker -q
+      - run: gcloud auth configure-docker us-central1-docker.pkg.dev -q
+
+      - uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: |
+            us-central1-docker.pkg.dev/bueckered-272522/bueckered-repo/corybuecker:${{ github.sha }}
+            us-central1-docker.pkg.dev/bueckered-272522/bueckered-repo/corybuecker:latest
+          cache-from: type=registry,ref=us-central1-docker.pkg.dev/bueckered-272522/bueckered-repo/corybuecker:latest
+          cache-to: type=inline
