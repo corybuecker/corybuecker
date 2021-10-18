@@ -10,7 +10,7 @@ defmodule BlogWeb.PageController do
         render(conn, "show.html", %{page: page, pages: all_pages()})
 
       nil ->
-        render(conn, BlogWeb.ErrorView, "404.html")
+        conn |> put_view(BlogWeb.ErrorView) |> render("404.html")
     end
   end
 
@@ -22,7 +22,7 @@ defmodule BlogWeb.PageController do
         render(conn, "show.html", %{page: page, pages: []})
 
       nil ->
-        render(conn, BlogWeb.ErrorView, "404.html")
+        conn |> put_view(BlogWeb.ErrorView) |> render("404.html")
     end
   end
 
