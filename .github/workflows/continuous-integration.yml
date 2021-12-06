@@ -12,11 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: google-github-actions/setup-gcloud@master
+      - uses: google-github-actions/auth@master
         with:
-          project_id: bueckered-272522
-          service_account_key: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
-          export_default_credentials: true
+          credentials_json: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+      
+      - uses: google-github-actions/setup-gcloud@master
 
       - run: gcloud auth configure-docker us-central1-docker.pkg.dev -q
 
