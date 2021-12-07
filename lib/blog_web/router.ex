@@ -4,7 +4,12 @@ defmodule BlogWeb.Router do
   pipeline :browser_without_session do
     plug(:accepts, ["html"])
     plug(:put_root_layout, {BlogWeb.LayoutView, :root})
-    plug(:put_secure_browser_headers)
+
+    plug(:put_secure_browser_headers, %{
+      "content-security-policy" =>
+        "default-src 'self'; img-src 'self'; connect-src https://exlytics.corybuecker.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com",
+      "referrer-policy" => "no-referrer"
+    })
   end
 
   pipeline :enforced_ssl do
