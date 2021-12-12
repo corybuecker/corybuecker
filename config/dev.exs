@@ -25,7 +25,14 @@ config :blog, BlogWeb.Endpoint,
   secret_key_base: "KBPJ1d/uMNnW/4bJJZ1QjZMrikVKqel1TkDo7cJUqENEBpz+s1kmYVRV8O0PBbCg",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    npx: [
+      "postcss",
+      "css/app.css",
+      "--output=../priv/static/assets/app.css",
+      "--watch",
+      cd: Path.expand("../assets", __DIR__)
+    ]
   ]
 
 # ## SSL Support

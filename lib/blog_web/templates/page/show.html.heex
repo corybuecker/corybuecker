@@ -1,5 +1,5 @@
-<h1><%= @page.title %></h1>
-<p>
+<h1 class="text-2xl mb-3"><%= @page.title %></h1>
+<p class="mb-2">
   <time datetime={@page.published_at}><%= @page.published_at %></time>
   <%= if @page.revised_at do %>
     (revised on <time datetime={@page.revised_at}><%= @page.revised_at %></time>)
@@ -7,11 +7,11 @@
 </p>
 <%= raw(compiled_body(@page.body)) %>
 <%= if length(@pages)>0 do %>
-  <h2>Older posts</h2>
+  <h2 class="text-xl mt-3 pb-1">Older posts</h2>
   <ul>
     <%= for older_page <- @pages do %>
       <li>
-        <tracked-anchor><a href={Routes.page_path(BlogWeb.Endpoint, :show, older_page.slug)}><%= older_page.title %></a></tracked-anchor>
+        <tracked-anchor><a class="underline hover:no-underline" href={Routes.page_path(BlogWeb.Endpoint, :show, older_page.slug)}><%= older_page.title %></a></tracked-anchor>
       </li>
     <% end %>
   </ul>
