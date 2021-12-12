@@ -1,6 +1,6 @@
 FROM node:alpine AS asset_builder
-COPY assets /tmp/assets
-WORKDIR /tmp/assets
+COPY assets lib /app
+WORKDIR /app/assets
 RUN npm install
 RUN npm run deploy
 
@@ -27,7 +27,7 @@ RUN mix compile
 COPY assets /app/assets
 COPY priv /app/priv
 
-COPY --from=asset_builder /tmp/assets/output/app.css /app/priv/static/assets/app.css
+COPY --from=asset_builder /app/assets/output/app.css /app/priv/static/assets/app.css
 
 RUN mix assets.deploy
 
