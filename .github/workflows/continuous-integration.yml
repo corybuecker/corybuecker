@@ -19,7 +19,7 @@ jobs:
       - uses: google-github-actions/setup-gcloud@master
 
       - run: gcloud auth configure-docker us-central1-docker.pkg.dev -q
-
+           
       - uses: docker/build-push-action@v2
         with:
           push: true

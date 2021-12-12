@@ -1,3 +1,9 @@
+FROM node:alpine AS asset_builder
+COPY assets /tmp/assets
+WORKDIR /tmp/assets
+RUN npm install
+RUN npm run deploy
+
 FROM elixir:alpine
 LABEL maintainer="Cory Buecker <email@corybuecker.com>"
 
@@ -20,6 +26,8 @@ RUN mix compile
 
 COPY assets /app/assets
 COPY priv /app/priv
+
+COPY --from=asset_builder /tmp/assets/output/app.css /app/priv/static/assets/app.css
 
 RUN mix assets.deploy
 
