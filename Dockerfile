@@ -29,7 +29,10 @@ COPY assets /app/assets
 COPY priv /app/priv
 
 COPY --from=asset_builder /app/assets/output/app.css /app/priv/static/assets/app.css
+COPY --from=asset_builder /app/assets/node_modules /app/assets/node_modules
 
 RUN mix assets.deploy
+
+RUN rm -rf /app/assets/node_modules
 
 CMD ["mix", "phx.server"]
