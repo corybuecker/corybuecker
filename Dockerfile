@@ -1,5 +1,6 @@
 FROM node:alpine AS asset_builder
-COPY assets lib /app
+COPY assets /app/assets
+COPY lib /app/lib
 WORKDIR /app/assets
 RUN npm install
 RUN npm run deploy
