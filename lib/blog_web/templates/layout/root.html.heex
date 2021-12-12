@@ -7,12 +7,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href={Routes.static_path(@conn, "/images/favicon-32x32.png")}>
     <link rel="icon" type="image/png" sizes="16x16" href={Routes.static_path(@conn, "/images/favicon-16x16.png")}>
     <link rel="manifest" href={Routes.static_path(@conn, "/site.webmanifest")}>
-    
+
     <%= if assigns[:page] do %>
       <meta name="description" content={@page.description} />
-      <title><%= @page.title %> - Cory Buecker</title>
+      <title><%= @page.title %></title>
     <% end %>
-    
+
     <link rel="preload" as="style" href={Routes.static_path(@conn, "/assets/app.css")} />
     <link rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")} />
   </head>
