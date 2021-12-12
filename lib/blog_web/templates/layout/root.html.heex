@@ -14,7 +14,6 @@
     <% end %>
     
     <link rel="preload" as="style" href={Routes.static_path(@conn, "/assets/app.css")} />
-    
     <link rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")} />
   </head>
   <body>
@@ -22,7 +21,7 @@
       <div class="flex flex-wrap">
         <header class="basis-2/12 grow">
           <nav class="flex flex-wrap justify-evenly">
-            <tracked-anchor class="basis-full text-center py-5"><a href="/" class="text-2xl">Cory Buecker</a></tracked-anchor>
+            <tracked-anchor class="basis-full text-center py-5"><a href="/" class="text-2xl whitespace-nowrap">Cory Buecker</a></tracked-anchor>
             <tracked-anchor class=""><a href="https://github.com/corybuecker" alt="GitHub page for Cory Buecker">
               <svg role="img" viewBox="0 0 24 24" fill="#181717" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
                 <title>GitHub</title>
@@ -41,11 +40,11 @@
             </a></tracked-anchor>
           </nav>
         </header>
-        <main class="basis-10/12 grow py-5">
+        <main class="basis-10/12 grow py-5 min-w-0">
           <%= @inner_content %>
         </main>
       </div>
     </div>
-    <script src={Routes.static_path(@conn, "/assets/app.js")} />
+    <script src={Routes.static_path(@conn, "/assets/app.js")} defer />
   </body>
 </html>

@@ -16,7 +16,7 @@ It has been some time since I started this project, but in this post I tie up al
 
 In this post, I will walk through the configuratin of Postfix and share the complete configuration in the form of Kubernetes configuration files.
 
-# Docker image
+## Docker image
 
 The entire Dockerfile for Postfix is:
 
