@@ -34,3 +34,7 @@ npm-debug.log
 
 /data
 /.elixir_ls
+
+/priv/cert/
+/.env
+/logfile
