@@ -8,7 +8,7 @@ const recordPageview = (): undefined => {
     page: pageUrl.pathname
   }
 
-  navigator.sendBeacon(analyticsUrl.toString(), JSON.stringify(data))
+  // navigator.sendBeacon(analyticsUrl.toString(), JSON.stringify(data))
   return
 }
 
@@ -43,7 +43,7 @@ class TrackedAnchor extends HTMLElement {
       click_link: target.href
     }
 
-    navigator.sendBeacon(analyticsUrl.toString(), JSON.stringify(data))
+    // navigator.sendBeacon(analyticsUrl.toString(), JSON.stringify(data))
   }
 }
 
