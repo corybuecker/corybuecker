@@ -17,7 +17,7 @@ defmodule BlogWeb.PageView do
            %{}}
 
         {"h2", attrs, y, z} ->
-          {"h2", attrs ++ [{"class", "text-xl pt-2"}], y, z}
+          {"h2", attrs ++ [{"class", "text-xl"}], y, z}
 
         other ->
           other

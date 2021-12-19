@@ -14,7 +14,7 @@ defmodule Blog.AdminFixtures do
         body: "some body",
         slug: "some slug"
       })
-      |> Blog.Admin.create_page()
+      |> Blog.create_page()
 
     page
   end

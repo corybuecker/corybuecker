@@ -1,13 +1,3 @@
----
-description: It has been some time since I started this project, but in this post I tie up all the parts of running a mail server in Kubernetes (K8s).
-draft: false
-preview: It has been some time since I started this project, but in this post I tie up all the parts of running a mail server in Kubernetes (K8s).
-published: 2021-07-13T13:00:53Z
-revised: 2021-07-18T14:57:30Z
-slug: running-a-mail-server-in-kubernetes-k8s-tying-it-all-together
-title: Running a mail server in Kubernetes (K8s), tying it all together
----
-
 It has been some time since I started this project, but in this post I tie up all the parts of running a mail server in Kubernetes (K8s). I highly recommend reading the first three posts, if you have not already.
 
 1. [Configuring Kubernetes and NGINX Ingress for a mail server](/post/configuring-kubernetes-and-nginx-ingress-for-a-mail-server)
@@ -32,7 +22,7 @@ CMD ["startup.sh"]
 
 Compared to Dovecot, setting up Postfix is relatively simple. Part of this simplicity is due to using Dovecot as the submission server, along with Sendgrid. Additionally, Dovecot is an LMTP service for Postfix, so the entire Postfix configuration in `/etc/postfix/main.cf` becomes:
 
-```plain
+```plaintext
 # Log everything to standard out
 maillog_file = /dev/stdout
 
@@ -43,7 +33,8 @@ myhostname = mail.example.com
 # disable all compatibility levels
 compatibility_level = 9999
 
-# Configure Postfix to expect the proxy protocol, since traffic on port 25 proxied through the NGINX ingress.
+# Configure Postfix to expect the proxy protocol, since
+# traffic on port 25 proxied through the NGINX ingress.
 smtpd_upstream_proxy_protocol = haproxy
 
 virtual_mailbox_domains = example.com
@@ -52,9 +43,9 @@ virtual_alias_maps = lmdb:/etc/postfix/virtual
 virtual_transport = lmtp:dovecot.default.svc.cluster.local:24
 ```
 
-In the `/etc/postfix/virtual` file, I map the entire domains to a single address.
+In the `/etc/postfix/virtual` file, I map the entire domain to a single address.
 
-```plain
+```plaintext
 @example.com me@example.com
 ```
 
