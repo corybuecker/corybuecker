@@ -15,8 +15,6 @@
 
     <link rel="preload" as="style" href={Routes.static_path(@conn, "/assets/app.css")} />
     <link rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")} />
-
-    <script src={Routes.static_path(@conn, "/assets/app.js")} />
   </head>
   <body>
     <div class="container mx-auto">
@@ -47,5 +45,6 @@
         </main>
       </div>
     </div>
+    <script src={Routes.static_path(@conn, "/assets/app.js")} defer />
   </body>
 </html>
