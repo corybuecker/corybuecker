@@ -8,7 +8,7 @@ defmodule BlogWeb.Router do
     plug(:put_secure_browser_headers, %{
       "content-security-policy" =>
         "default-src 'self'; img-src 'self'; connect-src https://exlytics.corybuecker.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com",
-      "referrer-policy" => "no-referrer"
+      "referrer-policy" => "same-origin"
     })
   end
 
