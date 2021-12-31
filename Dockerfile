@@ -1,38 +1,26 @@
-FROM node:alpine AS asset_builder
-COPY assets /app/assets
-COPY lib /app/lib
-WORKDIR /app/assets
-RUN npm install
-RUN npm run deploy
-
-FROM elixir:alpine
-LABEL maintainer="Cory Buecker <email@corybuecker.com>"
-
-ENV MIX_ENV=prod
-
-RUN mix local.rebar --force
+FROM elixir:slim AS elixir_builder
+RUN apt update && apt-get install -y git
 RUN mix local.hex --force
-
+RUN mix local.rebar --force
 COPY mix.exs mix.lock /app/
-
 WORKDIR /app
-
 RUN mix deps.get
 RUN mix deps.compile
 
-COPY config /app/config
-COPY lib /app/lib
+FROM node:alpine AS node_builder
+COPY assets/package.json assets/package-lock.json /app/assets/
+WORKDIR /app/assets
+RUN npm install
 
-RUN mix compile
+FROM elixir_builder AS content_builder
+COPY . /app
 
-COPY assets /app/assets
-COPY priv /app/priv
+COPY --from=node_builder /app/assets/node_modules /app/assets/node_modules
+RUN mix tailwind default
+RUN mix esbuild default
 
-COPY --from=asset_builder /app/assets/output/app.css /app/priv/static/assets/app.css
-COPY --from=asset_builder /app/assets/node_modules /app/assets/node_modules
+RUN mix run -e "Blog.assets()"
+RUN mix run -e "Blog.hello()"
 
-RUN mix assets.deploy
-
-RUN rm -rf /app/assets/node_modules
-
-CMD ["mix", "phx.server"]
+FROM nginx:alpine
+COPY --from=content_builder /app/output /usr/share/nginx/html

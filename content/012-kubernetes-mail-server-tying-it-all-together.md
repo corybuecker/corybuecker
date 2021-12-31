@@ -1,3 +1,13 @@
+---
+title: Running a mail server in Kubernetes (K8s), tying it all together
+published: 2021-07-13T13:03:27Z
+revised: 2021-07-18T03:03:13Z
+draft: false
+preview: In this post I tie up all the parts of running a mail server in Kubernetes (K8s)
+description: In this post I tie up all the parts of running a mail server in Kubernetes (K8s)
+slug: kubernetes-mail-server-tying-it-all-together
+---
+
 It has been some time since I started this project, but in this post I tie up all the parts of running a mail server in Kubernetes (K8s). I highly recommend reading the first three posts, if you have not already.
 
 1. [Configuring Kubernetes and NGINX Ingress for a mail server](/post/configuring-kubernetes-and-nginx-ingress-for-a-mail-server)

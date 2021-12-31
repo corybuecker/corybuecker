@@ -24,7 +24,7 @@ Kubernetes load balancers support two traffic policies: Cluster and Local. The d
 
 In GKE and Amazon Kubernetes, this can be configured by setting the [external traffic policy of the load balancer to `Local`](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip).
 
-This can [lead to imbalanced traffic](https://www.asykim.com/blog/deep-dive-into-kubernetes-external-traffic-policies) if a node is running more instances of the pod than another. In my case, this is easy to resolve by running the NGINX ingress controller as a `DaemonSet`. Otherwise, nodes without the controller will fail the health check. 
+This can [lead to imbalanced traffic](https://www.asykim.com/blog/deep-dive-into-kubernetes-external-traffic-policies) if a node is running more instances of the pod than another. In my case, this is easy to resolve by running the NGINX ingress controller as a `DaemonSet`. Otherwise, nodes without the controller will fail the health check.
 
 ```yaml
 controller:
@@ -50,7 +50,7 @@ tcp:
 
 I found it helpful to diagram the network architecture.
 
-![PROXY architecture](/009-proxy-diagram.png)
+![PROXY architecture](/images/009-proxy-diagram.png)
 
 Installing the Ingress with the configuration is simple.
 

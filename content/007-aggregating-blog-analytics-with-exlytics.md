@@ -16,12 +16,12 @@ Exlytics' schema is still very simple:
 
 ```markup
                                                  Table "public.events"
-   Column    |              Type              | Collation | Nullable | Default | Storage  | Stats target | Description 
+   Column    |              Type              | Collation | Nullable | Default | Storage  | Stats target | Description
 -------------+--------------------------------+-----------+----------+---------+----------+--------------+-------------
- time        | timestamp without time zone    |           | not null |         | plain    |              | 
- metadata    | jsonb                          |           |          |         | extended |              | 
- inserted_at | timestamp(0) without time zone |           | not null |         | plain    |              | 
- updated_at  | timestamp(0) without time zone |           | not null |         | plain    |              | 
+ time        | timestamp without time zone    |           | not null |         | plain    |              |
+ metadata    | jsonb                          |           |          |         | extended |              |
+ inserted_at | timestamp(0) without time zone |           | not null |         | plain    |              |
+ updated_at  | timestamp(0) without time zone |           | not null |         | plain    |              |
 Indexes:
     "events_metadata_index" gin (metadata)
     "events_time_idx" btree ("time" DESC)
@@ -48,12 +48,12 @@ GROUP BY
 
 ```markup
                                     View "public.page_views"
- Column |            Type             | Collation | Nullable | Default | Storage  | Description 
+ Column |            Type             | Collation | Nullable | Default | Storage  | Description
 --------+-----------------------------+-----------+----------+---------+----------+-------------
- day    | timestamp without time zone |           |          |         | plain    | 
- host   | text                        |           |          |         | extended | 
- page   | text                        |           |          |         | extended | 
- count  | bigint                      |           |          |         | plain    | 
+ day    | timestamp without time zone |           |          |         | plain    |
+ host   | text                        |           |          |         | extended |
+ page   | text                        |           |          |         | extended |
+ count  | bigint                      |           |          |         | plain    |
 ```
 
 Very next on my to-do list for Exlytics is adding a site identifier so that the service can be used on multiple websites. Because TimescaleDB automatically indexes all dimensions, this will remain performant even with multiple site identifiers.
@@ -66,4 +66,4 @@ I decoupled the event collection application from the reporting application. The
 
 [Exlytics Dashboard](https://github.com/corybuecker/exlytics-dashboard) is open-source and is in a very simple state at the moment. Visualizations are a lot of fun to build.
 
-![Page views](/007-aggregating-blog-analytics-with-exlytics-page-views.png)
+![Page views](/images/007-aggregating-blog-analytics-with-exlytics-page-views.png)
