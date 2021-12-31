@@ -24,4 +24,4 @@ RUN mix run -e "Blog.hello()"
 
 FROM nginx:alpine
 COPY --from=content_builder /app/output /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
