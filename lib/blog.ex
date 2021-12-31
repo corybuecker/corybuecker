@@ -1,19 +1,6 @@
 defmodule Blog do
   require Logger
 
-  @moduledoc """
-  Documentation for `Blog`.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Blog.hello()
-      :world
-
-  """
   def assets do
     File.cp_r("assets/static/", "output/")
     File.cp("output/css/app.css", "output/css/app-#{file_hash_short("output/css/app.css")}.css")
@@ -54,31 +41,44 @@ defmodule Blog do
 
       html =
         Phoenix.View.render_to_string(Blog.Views.Page, "show.html", %{
-          title: frontmatter["title"],
           body: body,
-          css: "/css/app-#{file_hash_short("output/css/app.css")}.css",
           css_integrity: "sha384-#{file_hash("output/css/app.css")}",
-          js: "/js/app-#{file_hash_short("output/js/app.js")}.js",
+          css: "/css/app-#{file_hash_short("output/css/app.css")}.css",
           js_integrity: "sha384-#{file_hash("output/js/app.js")}",
-          layout: {Blog.Views.Layout, "layout.html"}
+          js: "/js/app-#{file_hash_short("output/js/app.js")}.js",
+          layout: {Blog.Views.Layout, "layout.html"},
+          other_pages: [],
+          published_at: frontmatter["published_at"],
+          revised_at: frontmatter["revised_at"],
+          title: frontmatter["title"]
         })
 
       File.mkdir_p("output/post/#{frontmatter["slug"]}")
       File.write("output/post/#{frontmatter["slug"]}/index.html", html)
     end)
 
-    homepage = File.ls!("content") |> Enum.sort() |> Enum.reverse() |> List.first()
+    [homepage | other_pages] = File.ls!("content") |> Enum.sort() |> Enum.reverse()
+
+    other_pages =
+      other_pages
+      |> Enum.map(fn path -> extract_frontmatter("content/#{path}") end)
+      |> Enum.map(fn {:ok, frontmatter} -> frontmatter end)
+
+    Logger.debug(other_pages)
     {:ok, {frontmatter, body}} = parse_content_file("content/#{homepage}")
 
     html =
       Phoenix.View.render_to_string(Blog.Views.Page, "show.html", %{
-        title: frontmatter["title"],
         body: body,
-        css: "/css/app-#{file_hash_short("output/css/app.css")}.css",
         css_integrity: "sha384-#{file_hash("output/css/app.css")}",
-        js: "/js/app-#{file_hash_short("output/js/app.js")}.js",
+        css: "/css/app-#{file_hash_short("output/css/app.css")}.css",
         js_integrity: "sha384-#{file_hash("output/js/app.js")}",
-        layout: {Blog.Views.Layout, "layout.html"}
+        js: "/js/app-#{file_hash_short("output/js/app.js")}.js",
+        layout: {Blog.Views.Layout, "layout.html"},
+        other_pages: other_pages,
+        published_at: frontmatter["published_at"],
+        revised_at: frontmatter["revised_at"],
+        title: frontmatter["title"]
       })
 
     File.write("output/index.html", html)
@@ -96,6 +96,13 @@ defmodule Blog do
     else
       err -> err
     end
+  end
+
+  defp extract_frontmatter(path) when is_bitstring(path) do
+    File.read!(path)
+    |> String.split("---", parts: 2, trim: true)
+    |> List.first()
+    |> YamlElixir.read_from_string()
   end
 
   defp postprocessor() do
