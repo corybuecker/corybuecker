@@ -48,8 +48,8 @@ defmodule Blog do
           js: "/js/app-#{file_hash_short("output/js/app.js")}.js",
           layout: {Blog.Views.Layout, "layout.html"},
           other_pages: [],
-          published_at: frontmatter["published_at"],
-          revised_at: frontmatter["revised_at"],
+          published: frontmatter["published"],
+          revised: frontmatter["revised"],
           title: frontmatter["title"]
         })
 
@@ -76,8 +76,8 @@ defmodule Blog do
         js: "/js/app-#{file_hash_short("output/js/app.js")}.js",
         layout: {Blog.Views.Layout, "layout.html"},
         other_pages: other_pages,
-        published_at: frontmatter["published_at"],
-        revised_at: frontmatter["revised_at"],
+        published: frontmatter["published"] |> maybe_date(),
+        revised: frontmatter["revised"] |> maybe_date(),
         title: frontmatter["title"]
       })
 
@@ -105,10 +105,17 @@ defmodule Blog do
     |> YamlElixir.read_from_string()
   end
 
+  defp maybe_date(datetime) when is_bitstring(datetime) do
+    case DateTime.from_iso8601(datetime) do
+      {:ok, dt, _} -> dt |> DateTime.to_date()
+      _ -> nil
+    end
+  end
+
   defp postprocessor() do
     fn
       {"a", attributes, body, map} ->
-        {"a", attributes ++ [{"class", "hover:underline"}], body, map}
+        {"a", attributes ++ [{"class", "underline hover:no-underline"}], body, map}
 
       {"h2", attributes, body, map} ->
         {"h2", attributes ++ [{"class", "text-2xl"}], body, map}

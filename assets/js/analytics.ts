@@ -19,32 +19,23 @@ const formatTimeElement = (element: HTMLTimeElement): void => {
   element.innerText = new Date(timeString).toLocaleDateString()
 }
 
-const timeElements = document.getElementsByTagName('time')
-
-Array.from(timeElements).forEach(formatTimeElement)
-
-class TrackedAnchor extends HTMLElement {
-  constructor() {
-    super()
-    const anchor: HTMLAnchorElement = this.getElementsByTagName('a')[0]
-
-    anchor.addEventListener('click', this.handleTrackedAnchorClick)
-  }
-
-  handleTrackedAnchorClick(event: Event): undefined {
-    if (event.currentTarget instanceof HTMLAnchorElement === false) {
-      return
-    }
-
-    const target = event.currentTarget as HTMLAnchorElement
+const trackAnchor = (element: HTMLAnchorElement): undefined => {
+  element.addEventListener('click', _event => {
     const analyticsUrl = new URL(EXLYTICS_URL)
     const data = {
       account_id: EXLYTICS_ACCOUNT,
-      click_link: target.href
+      click_link: element.href
     }
 
     navigator.sendBeacon(analyticsUrl.toString(), JSON.stringify(data))
-  }
+    return
+  })
+
+  return
 }
 
-customElements.define('tracked-anchor', TrackedAnchor)
+const timeElements = document.getElementsByTagName('time')
+Array.from(timeElements).forEach(formatTimeElement)
+
+const anchorElements = document.getElementsByTagName('a')
+Array.from(anchorElements).forEach(trackAnchor)

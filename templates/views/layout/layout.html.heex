@@ -42,6 +42,16 @@
         </header>
         <main class="basis-10/12 grow py-5 min-w-0 space-y-3">
           <%= @inner_content %>
+          <%= if length(@other_pages) > 0 do %>
+            <h2 class="text-xl">Older posts</h2>
+            <ul>
+              <%= for older_page <- @other_pages do %>
+                <li>
+                  <a class="underline hover:no-underline" href={"/post/#{older_page["slug"]}"}><%= older_page["title"] %></a>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
         </main>
       </div>
     </div>
