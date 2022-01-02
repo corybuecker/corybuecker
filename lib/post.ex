@@ -17,7 +17,7 @@ defmodule Post do
     }
   end
 
-  defp maybe_date({:ok, %DateTime{} = datetime, _}), do: datetime
+  defp maybe_date({:ok, %DateTime{} = datetime, _}), do: datetime |> DateTime.to_date()
   defp maybe_date(_), do: nil
 
   defp parse_content_file(path) when is_bitstring(path) do
