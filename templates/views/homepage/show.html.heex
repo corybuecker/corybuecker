@@ -8,9 +8,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 
-    <%= if assigns[:page] do %>
-      <meta name="description" content={@page.description} />
-      <title><%= @page.title %></title>
+    <%= if @description do %>
+      <meta name="description" content={@description} />
+      <title><%= @title %></title>
     <% end %>
 
     <link rel="preload" as="style" href={@css} />
