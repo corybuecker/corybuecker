@@ -47,7 +47,7 @@
             <ul>
               <%= for older_page <- @other_pages do %>
                 <li>
-                  <a class="underline hover:no-underline" href={"/post/#{older_page["slug"]}"}><%= older_page["title"] %></a>
+                  <a class="underline hover:no-underline" href={"/post/#{older_page.slug}"}><%= older_page.title %></a>
                 </li>
               <% end %>
             </ul>

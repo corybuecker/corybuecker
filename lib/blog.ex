@@ -34,100 +34,52 @@ defmodule Blog do
   end
 
   def hello do
-    File.ls!("content")
-    |> Enum.each(fn content_path ->
-      Logger.debug(content_path)
-      {:ok, {frontmatter, body}} = parse_content_file("content/#{content_path}")
+    [homepage | other_pages] = File.ls!("content") |> Enum.sort() |> Enum.reverse()
+    homepage = Post.from_file("content/#{homepage}")
 
-      html =
-        Phoenix.View.render_to_string(Blog.Views.Page, "show.html", %{
-          body: body,
+    others =
+      other_pages
+      |> Enum.reduce([], fn path, acc ->
+        page = Post.from_file("content/#{path}")
+
+        html =
+          Phoenix.View.render_to_string(
+            Blog.Views.Page,
+            "show.html",
+            page
+            |> Map.merge(%{
+              css_integrity: "sha384-#{file_hash("output/css/app.css")}",
+              css: "/css/app-#{file_hash_short("output/css/app.css")}.css",
+              js_integrity: "sha384-#{file_hash("output/js/app.js")}",
+              js: "/js/app-#{file_hash_short("output/js/app.js")}.js",
+              layout: {Blog.Views.Layout, "layout.html"},
+              other_pages: []
+            })
+            |> Map.from_struct()
+          )
+
+        File.mkdir_p("output/post/#{page.slug}")
+        File.write("output/post/#{page.slug}/index.html", html)
+
+        acc ++ [%{title: page.title, slug: page.slug}]
+      end)
+
+    html =
+      Phoenix.View.render_to_string(
+        Blog.Views.Page,
+        "show.html",
+        homepage
+        |> Map.merge(%{
           css_integrity: "sha384-#{file_hash("output/css/app.css")}",
           css: "/css/app-#{file_hash_short("output/css/app.css")}.css",
           js_integrity: "sha384-#{file_hash("output/js/app.js")}",
           js: "/js/app-#{file_hash_short("output/js/app.js")}.js",
           layout: {Blog.Views.Layout, "layout.html"},
-          other_pages: [],
-          published: frontmatter["published"],
-          revised: frontmatter["revised"],
-          title: frontmatter["title"]
+          other_pages: others
         })
-
-      File.mkdir_p("output/post/#{frontmatter["slug"]}")
-      File.write("output/post/#{frontmatter["slug"]}/index.html", html)
-    end)
-
-    [homepage | other_pages] = File.ls!("content") |> Enum.sort() |> Enum.reverse()
-
-    other_pages =
-      other_pages
-      |> Enum.map(fn path -> extract_frontmatter("content/#{path}") end)
-      |> Enum.map(fn {:ok, frontmatter} -> frontmatter end)
-
-    Logger.debug(other_pages)
-    {:ok, {frontmatter, body}} = parse_content_file("content/#{homepage}")
-
-    html =
-      Phoenix.View.render_to_string(Blog.Views.Page, "show.html", %{
-        body: body,
-        css_integrity: "sha384-#{file_hash("output/css/app.css")}",
-        css: "/css/app-#{file_hash_short("output/css/app.css")}.css",
-        js_integrity: "sha384-#{file_hash("output/js/app.js")}",
-        js: "/js/app-#{file_hash_short("output/js/app.js")}.js",
-        layout: {Blog.Views.Layout, "layout.html"},
-        other_pages: other_pages,
-        published: frontmatter["published"] |> maybe_date(),
-        revised: frontmatter["revised"] |> maybe_date(),
-        title: frontmatter["title"]
-      })
+        |> Map.from_struct()
+      )
 
     File.write("output/index.html", html)
-  end
-
-  defp parse_content_file(path) when is_bitstring(path) do
-    Logger.debug(path)
-
-    with {:ok, file_contents} <- File.read(path),
-         [frontmatter_string, body_string] <-
-           file_contents |> String.split("---", parts: 2, trim: true),
-         {:ok, frontmatter} <- frontmatter_string |> YamlElixir.read_from_string(),
-         {:ok, body, _} <- body_string |> Earmark.as_html(postprocessor: postprocessor()) do
-      {:ok, {frontmatter, body}}
-    else
-      err -> err
-    end
-  end
-
-  defp extract_frontmatter(path) when is_bitstring(path) do
-    File.read!(path)
-    |> String.split("---", parts: 2, trim: true)
-    |> List.first()
-    |> YamlElixir.read_from_string()
-  end
-
-  defp maybe_date(datetime) when is_bitstring(datetime) do
-    case DateTime.from_iso8601(datetime) do
-      {:ok, dt, _} -> dt |> DateTime.to_date()
-      _ -> nil
-    end
-  end
-
-  defp postprocessor() do
-    fn
-      {"a", attributes, body, map} ->
-        {"a", attributes ++ [{"class", "underline hover:no-underline"}], body, map}
-
-      {"h2", attributes, body, map} ->
-        {"h2", attributes ++ [{"class", "text-2xl"}], body, map}
-
-      {"h3", attributes, body, map} ->
-        {"h3", attributes ++ [{"class", "text-xl"}], body, map}
-
-      {tag, attributes, body, map} ->
-        {tag, attributes, body, map}
-
-      string ->
-        string
-    end
   end
 end

@@ -1,6 +1,6 @@
 ---
 title: Setting up Network File System (NFS) on Kubernetes
-published: 2021-01-30 10:21:26
+published: 2021-01-30T10:21:26Z
 revised: 2021-02-28T20:21:26Z
 draft: false
 preview: Before getting to Postfix and Dovecot, I need a large storage space for email. Kubernetes' persistent volumes work very well, but they have a specific limitation for this use case.
@@ -63,7 +63,7 @@ sudo chown nobody:nogroup /mnt/disks/network_storage_disk/mailserver
 The last step is setting up the NFS export. In `/etc/exports`, add the directory and then restart NFS.
 
 ```bash
-root@network-storage:~$ cat /etc/exports 
+root@network-storage:~$ cat /etc/exports
 # /etc/exports: the access control list for filesystems which may be exported
 #		to NFS clients.  See exports(5).
 #
