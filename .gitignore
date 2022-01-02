@@ -29,3 +29,4 @@ blog-*.tar
 /assets/node_modules
 /output/
 /assets/tailwind.config.js
+/node_modules/
