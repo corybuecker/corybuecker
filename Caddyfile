@@ -5,6 +5,10 @@
 localhost:80 {
 	root * ./output
 
+  log {
+    output stdout
+  }
+
 	file_server {
 		disable_canonical_uris
 	}
@@ -13,7 +17,12 @@ localhost:80 {
 corybuecker.com:80 {
 	root * /usr/share/caddy
 
-	file_server {
+  log {
+    output stdout
+    format json
+  }
+
+  file_server {
 		disable_canonical_uris
 	}
 }
