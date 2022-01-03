@@ -16,7 +16,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
 
-      - uses: google-github-actions/setup-gcloud@master
+      - uses: google-github-actions/setup-gcloud@v0
 
       - run: gcloud auth configure-docker us-central1-docker.pkg.dev -q
 

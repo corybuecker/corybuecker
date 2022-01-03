@@ -23,8 +23,8 @@ corybuecker.com:80 {
 	}
 
   header Content-Security-Policy "default-src 'none'; img-src 'self'; script-src 'self'; connect-src https://exlytics.corybuecker.com; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
-
   header Referrer-Policy "strict-origin-when-cross-origin"
+  header X-Content-Type-Options "nosniff"
 
 	file_server {
 		disable_canonical_uris
