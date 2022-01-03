@@ -16,7 +16,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
 
-      - uses: google-github-actions/setup-gcloud@v0
+      - uses: google-github-actions/setup-gcloud@master
 
       - run: gcloud auth configure-docker us-central1-docker.pkg.dev -q
 
@@ -26,5 +26,5 @@ jobs:
           tags: |
             us-central1-docker.pkg.dev/bueckered-272522/github-actions-repo/corybuecker:${{ github.sha }}
             us-central1-docker.pkg.dev/bueckered-272522/github-actions-repo/corybuecker:latest
-          cache-from: type=registry,ref=us-central1-docker.pkg.dev/bueckered-272522/github-actions-repo/corybuecker:buildcache
-          cache-to: type=registry,ref=us-central1-docker.pkg.dev/bueckered-272522/github-actions-repo/corybuecker:buildcache,mode=max
+          cache-from: type=registry,ref=us-central1-docker.pkg.dev/bueckered-272522/github-actions-repo/corybuecker:latest
+          cache-to: type=inline
