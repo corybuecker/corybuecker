@@ -22,6 +22,6 @@ RUN mix esbuild default
 RUN mix run -e "Blog.assets()"
 RUN mix run -e "Blog.hello()"
 
-FROM nginx:alpine
-COPY --from=content_builder /app/output /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
+FROM caddy:alpine
+COPY --from=content_builder /app/output /usr/share/caddy
+COPY Caddyfile /etc/caddy/Caddyfile

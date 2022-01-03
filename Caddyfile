@@ -1,0 +1,19 @@
+{
+	admin off
+}
+
+localhost:80 {
+	root * ./output
+
+	file_server {
+		disable_canonical_uris
+	}
+}
+
+corybuecker.com:80 {
+	root * /usr/share/caddy
+
+	file_server {
+		disable_canonical_uris
+	}
+}
