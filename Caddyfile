@@ -17,20 +17,20 @@ localhost:80 {
 corybuecker.com:80 {
 	root * /usr/share/caddy
 
-  encode gzip
+	encode gzip
 
 	log {
 		output stdout
 		format json
 	}
 
-  header Content-Security-Policy "default-src 'none'; img-src 'self'; script-src 'self'; connect-src https://exlytics.corybuecker.com; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
-  header Referrer-Policy "strict-origin-when-cross-origin"
-  header X-Content-Type-Options "nosniff"
+	header Content-Security-Policy "default-src 'none'; img-src 'self'; script-src 'self'; connect-src https://exlytics.corybuecker.com; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
+	header Referrer-Policy "strict-origin-when-cross-origin"
+	header X-Content-Type-Options "nosniff"
 
-  header / Cache-Control "no-store"
-  header /css/* Cache-Control "max-age=31536000, immutable, public"
-  header /js/* Cache-Control "max-age=31536000, immutable, public"
+	header / Cache-Control "no-store"
+	header /css/* Cache-Control "max-age=31536000, immutable, public"
+	header /js/* Cache-Control "max-age=31536000, immutable, public"
 
 	file_server {
 		disable_canonical_uris
