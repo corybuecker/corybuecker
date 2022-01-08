@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: docker/setup-buildx-action@v1
 
       - uses: google-github-actions/auth@v0.4.0
         with:
@@ -27,5 +27,5 @@ jobs:
           tags: |
             us-central1-docker.pkg.dev/bueckered-272522/github-actions-repo/corybuecker:${{ github.sha }}
             us-central1-docker.pkg.dev/bueckered-272522/github-actions-repo/corybuecker:latest
-          cache-from: type=registry,ref=us-central1-docker.pkg.dev/bueckered-272522/github-actions-repo/corybuecker:latest
-          cache-to: type=inline
+          cache-from: type=registry,ref=us-central1-docker.pkg.dev/bueckered-272522/github-actions-repo/corybuecker:buildcache
+          cache-to: type=registry,ref=us-central1-docker.pkg.dev/bueckered-272522/github-actions-repo/corybuecker:buildcache,mode=max
