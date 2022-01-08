@@ -26,10 +26,7 @@ defmodule Blog.MixProject do
       {:jason, "~> 1.2"},
       {:phoenix_live_view, "~> 0.17.5"},
       {:phoenix_view, "~> 1.0"},
-      {:tailwind, "~> 0.1.2",
-       runtime: false,
-       git: "https://github.com/bowmanmike/tailwind.git",
-       branch: "add-linux-arm64-target"},
+      {:tailwind, "~> 0.1.4"},
       {:yaml_elixir, "~> 2.8"}
     ]
   end
