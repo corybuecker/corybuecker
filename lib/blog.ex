@@ -35,10 +35,9 @@ defmodule Blog do
 
   def hello do
     [homepage | other_pages] = File.ls!("content") |> Enum.sort() |> Enum.reverse()
-    homepage = Post.from_file("content/#{homepage}")
 
     others =
-      other_pages
+      ([homepage] ++ other_pages)
       |> Enum.reduce([], fn path, acc ->
         page = Post.from_file("content/#{path}")
 
@@ -63,6 +62,9 @@ defmodule Blog do
 
         acc ++ [%{title: page.title, slug: page.slug}]
       end)
+
+    homepage = Post.from_file("content/#{homepage}")
+    [_ | others] = others
 
     html =
       Phoenix.View.render_to_string(

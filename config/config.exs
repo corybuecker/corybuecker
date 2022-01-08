@@ -21,6 +21,7 @@ config :tailwind,
     args: ~w(
       --config=tailwind.js
       --input=css/app.css
+      --postcss
       --output=../output/css/app.css
     ),
     cd: Path.expand("../assets", __DIR__)
