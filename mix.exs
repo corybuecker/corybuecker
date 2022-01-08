@@ -27,7 +27,8 @@ defmodule Blog.MixProject do
       {:phoenix_live_view, "~> 0.17.5"},
       {:phoenix_view, "~> 1.0"},
       {:tailwind, "~> 0.1.4"},
-      {:yaml_elixir, "~> 2.8"}
+      {:yaml_elixir, "~> 2.8"},
+      {:xml_builder, "~> 2.1"}
     ]
   end
 end

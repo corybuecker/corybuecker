@@ -34,10 +34,10 @@ defmodule Blog do
   end
 
   def hello do
-    [homepage | other_pages] = File.ls!("content") |> Enum.sort() |> Enum.reverse()
+    all_pages = File.ls!("content") |> Enum.sort() |> Enum.reverse()
 
     others =
-      ([homepage] ++ other_pages)
+      all_pages
       |> Enum.reduce([], fn path, acc ->
         page = Post.from_file("content/#{path}")
 
@@ -60,11 +60,22 @@ defmodule Blog do
         File.mkdir_p("output/post/#{page.slug}")
         File.write("output/post/#{page.slug}/index.html", html)
 
-        acc ++ [%{title: page.title, slug: page.slug}]
+        acc ++
+          [
+            %{
+              title: page.title,
+              slug: page.slug,
+              published: page.published,
+              revised: page.revised
+            }
+          ]
       end)
 
+    [homepage | _] = all_pages
     homepage = Post.from_file("content/#{homepage}")
     [_ | others] = others
+
+    File.write("output/sitemap.xml", Sitemap.build(others))
 
     html =
       Phoenix.View.render_to_string(
