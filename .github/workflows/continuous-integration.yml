@@ -1,9 +1,7 @@
-name: Continuous integration
 on:
   push:
     branches:
       - main
-      - develop
 
 jobs:
   build:
