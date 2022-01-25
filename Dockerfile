@@ -1,21 +1,19 @@
 FROM elixir:slim AS elixir_builder
-RUN apt update && apt-get install -y git
+RUN apt update && apt-get install -y git curl
+RUN curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
+RUN apt-get install -y nodejs
 RUN mix local.hex --force
 RUN mix local.rebar --force
-COPY mix.exs mix.lock /app/
+COPY mix.exs mix.lock package.json package-lock.json /app/
+
 WORKDIR /app
+
 RUN mix deps.get
 RUN mix deps.compile
-
-FROM node:alpine AS node_builder
-COPY assets/package.json assets/package-lock.json /app/assets/
-WORKDIR /app/assets
 RUN npm install
 
-FROM elixir_builder AS content_builder
 COPY . /app
 
-COPY --from=node_builder /app/assets/node_modules /app/assets/node_modules
 RUN mix tailwind default
 RUN mix esbuild default
 
@@ -23,5 +21,5 @@ RUN mix run -e "Blog.assets()"
 RUN mix run -e "Blog.hello()"
 
 FROM caddy:alpine
-COPY --from=content_builder /app/output /usr/share/caddy
+COPY --from=elixir_builder /app/output /usr/share/caddy
 COPY Caddyfile /etc/caddy/Caddyfile

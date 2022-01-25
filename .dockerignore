@@ -26,5 +26,5 @@ blog-*.tar
 /tmp/
 
 /.elixir_ls/
-/assets/node_modules
+/node_modules/
 /output/

@@ -16,7 +16,8 @@ config :esbuild,
   ]
 
 config :tailwind,
-  version: "3.0.8",
+  version: "3.0.16",
+  path: Path.expand("../node_modules/.bin/tailwindcss", __DIR__),
   default: [
     args: ~w(
       --config=tailwind.js
