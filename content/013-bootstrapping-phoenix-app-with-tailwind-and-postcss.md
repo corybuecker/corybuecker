@@ -162,4 +162,4 @@ config :tailwind,
   ]
 ```
 
-Running `mix tailwind default` will now use the Node version with PostCSS and any plugins I want to include. One problem with this approach is that building my application in Docker requires adding a Node build layer to the Dockerfile. However, that hasn't been a big problem for me so far. Another alternative approach is to drop the tailwind package completely and make a NPM-based pipeline. I really like being able to include TailwindCSS to the Phoenix watcher and recompile CSS in the same way that JS is recompiled.
+Running `mix tailwind default` will now use the Node version with PostCSS and any plugins I want to include. One problem with this approach is that building my application in Docker requires adding a Node build layer to the Dockerfile. That hasn't been a big problem for me so far. An alternative approach is to drop the tailwind package completely and make a NPM-based pipeline. I really like being able to include TailwindCSS to the Phoenix watcher and recompile CSS in the same way that JS is recompiled.
