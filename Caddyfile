@@ -3,7 +3,7 @@
 }
 
 localhost:80 {
-	root * ./output
+	root * /usr/share/caddy
 
 	log {
 		output stdout
@@ -12,6 +12,8 @@ localhost:80 {
 	file_server {
 		disable_canonical_uris
 	}
+
+  header Cache-Control "no-store"
 }
 
 corybuecker.com:80 {
@@ -28,7 +30,7 @@ corybuecker.com:80 {
 	header Referrer-Policy "strict-origin-when-cross-origin"
 	header X-Content-Type-Options "nosniff"
 
-	header / Cache-Control "no-store"
+	header Cache-Control "no-store"
 	header /css/* Cache-Control "max-age=31536000, immutable, public"
 	header /js/* Cache-Control "max-age=31536000, immutable, public"
 
