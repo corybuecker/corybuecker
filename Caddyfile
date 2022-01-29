@@ -9,11 +9,13 @@ localhost:80 {
 		output stdout
 	}
 
-	file_server {
+  header Cache-Control "no-store"
+
+  respond /healthcheck 200
+
+  file_server {
 		disable_canonical_uris
 	}
-
-  header Cache-Control "no-store"
 }
 
 corybuecker.com:80 {
@@ -34,7 +36,9 @@ corybuecker.com:80 {
 	header /css/* Cache-Control "max-age=31536000, immutable, public"
 	header /js/* Cache-Control "max-age=31536000, immutable, public"
 
-	file_server {
+  respond /healthcheck 200
+
+  file_server {
 		disable_canonical_uris
 	}
 }
