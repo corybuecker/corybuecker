@@ -1,8 +1,8 @@
 ---
 title: Bootstrapping a new Phoenix application with Tailwind and PostCSS
 published: 2022-01-29T14:15:19-06
-preview: test
-description: test
+preview: Adding a Node-based TailwindCSS pipeline that can be invoked from a Mix task.
+description: Adding a Node-based TailwindCSS pipeline that can be invoked from a Mix task.
 slug: bootstrapping-phoenix-app-with-tailwind-and-css
 ---
 

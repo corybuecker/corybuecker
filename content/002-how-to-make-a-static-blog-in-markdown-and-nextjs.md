@@ -29,6 +29,7 @@ Hi!
 ```
 
 Install `react-markdown` and `front-matter`. These will be used to convert the Markdown content files into HTML.
+
 ```bash
 npm install --save-dev react-markdown front-matter
 ```
