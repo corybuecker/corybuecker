@@ -2,7 +2,6 @@
 title: An introduction
 published: 2019-11-30T12:55:04Z
 revised: 2019-12-22T12:02:15Z
-draft: false
 preview: I have wanted to start a blog for some time now. I like to think there are several reasons.
 description: I have wanted to start a blog for some time now. I like to think there are several reasons.
 slug: an-introduction

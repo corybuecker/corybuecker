@@ -2,7 +2,6 @@
 title: Configuring Kubernetes and NGINX Ingress for a mail server
 published: 2021-01-03T17:25:39Z
 revised: 2021-04-26T13:07:47Z
-draft: false
 preview: This is the first of a four-part series aimed at setting up a mail server in Kubernetes (K8s). Mail server software has always confused me. I am approaching this as a learning experience.
 description: Configuring Kubernetes and NGINX Ingress for a mail server
 slug: configuring-kubernetes-and-nginx-ingress-for-a-mail-server

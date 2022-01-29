@@ -3,17 +3,17 @@
 }
 
 localhost:80 {
-	root * /usr/share/caddy
+	root * ./output
 
 	log {
 		output stdout
 	}
 
-  header Cache-Control "no-store"
+	header Cache-Control "no-store"
 
-  respond /healthcheck 200
+	respond /healthcheck 200
 
-  file_server {
+	file_server {
 		disable_canonical_uris
 	}
 }
@@ -36,9 +36,9 @@ corybuecker.com:80 {
 	header /css/* Cache-Control "max-age=31536000, immutable, public"
 	header /js/* Cache-Control "max-age=31536000, immutable, public"
 
-  respond /healthcheck 200
+	respond /healthcheck 200
 
-  file_server {
+	file_server {
 		disable_canonical_uris
 	}
 }

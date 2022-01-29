@@ -2,7 +2,6 @@
 title: How to capture simple blog analytics without Google Analytics
 published: 2020-01-05T17:27:46Z
 revised: 2021-02-07 18:24:48
-draft: false
 preview: As part of building my blog, I wanted to capture some analytics with a simple, privacy-focused approach.
 description: Capture simple analytics for a blog with a privacy-oriented approach.
 slug: capture-simple-analytics-without-google-analytics
@@ -22,7 +21,7 @@ Safari is a leader in web tracking privacy with their [Intelligent Tracking Prev
 
 Exlytics uses the request headers, combined with the query string, to record an analytics request. Unfortuntely, that includes more information than I really need to capture. The GDPR, under Recital 30, indicates that [online identifiers may include IP addresses](https://gdpr-info.eu/recitals/no-30/).
 
-In Exlytics, I have limited the saved headers to those in [an approved list](https://github.com/corybuecker/exlytics/blob/main/lib/router.ex#L6). Initially, this list includes: user agent, referer, host and origin. Referer can be controversial since it tells me where a visitor came from. However, I have added a [referer-policy header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) to this website to instruct the browser to only send the origin of the referer. 
+In Exlytics, I have limited the saved headers to those in [an approved list](https://github.com/corybuecker/exlytics/blob/main/lib/router.ex#L6). Initially, this list includes: user agent, referer, host and origin. Referer can be controversial since it tells me where a visitor came from. However, I have added a [referer-policy header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) to this website to instruct the browser to only send the origin of the referer.
 
 ## Self-hosted
 

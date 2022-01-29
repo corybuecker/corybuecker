@@ -2,7 +2,6 @@
 title: How to make a static blog in Markdown and Next.js
 published: 2019-12-01T12:54:49Z
 revised: 2020-01-05T17:06:55Z
-draft: false
 preview: I had a couple of requirements in mind when starting this site. First, I wanted to use Markdown but build the main content management system (CMS) with React. It also needs to transpile into a static site so that I can host it in a S3 bucket or in Google Cloud Storage. The Markdown content files need to contain front matter that renders to the page.
 description: I had a couple of requirements in mind when starting this site. First, I wanted to use Markdown but build the main content management system (CMS) with React. It also needs to transpile into a static site so that I can host it in a S3 bucket or in Google Cloud Storage. The Markdown content files need to contain front matter that renders to the page.
 slug: how-to-make-a-static-blog-in-markdown-and-nextjs
