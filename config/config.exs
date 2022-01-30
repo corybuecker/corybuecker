@@ -17,12 +17,10 @@ config :esbuild,
 
 config :tailwind,
   version: "3.0.16",
-  path: Path.expand("../node_modules/.bin/tailwindcss", __DIR__),
   default: [
     args: ~w(
-      --config=tailwind.js
+      --config=tailwind.config.js
       --input=css/app.css
-      --postcss
       --output=../output/css/app.css
     ),
     cd: Path.expand("../assets", __DIR__)

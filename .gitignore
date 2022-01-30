@@ -28,5 +28,4 @@ blog-*.tar
 /.elixir_ls/
 /assets/node_modules
 /output/
-/assets/tailwind.config.js
 /node_modules/
