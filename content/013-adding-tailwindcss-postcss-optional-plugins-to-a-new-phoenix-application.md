@@ -81,7 +81,7 @@ One use-case I want to support is breaking up my CSS files and using imports. Th
 @import "model/component";
 ```
 
-The import of `model/component` will not be resolved by the TailwindCSS, since that is the responsbility of PostCSS.
+The import of `model/component` will not be resolved by the TailwindCSS, since that is the responsibility of PostCSS.
 
 The first thing I created was `assets/postcss.config.js` as:
 
