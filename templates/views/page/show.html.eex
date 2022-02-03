@@ -6,4 +6,3 @@
   <% end %>
 </p>
 <%= Phoenix.HTML.raw(@body) %>
-
