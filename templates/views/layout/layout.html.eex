@@ -54,6 +54,6 @@
         </main>
       </div>
     </div>
-    <script src="<%= @js %>" integrity="<%= @js_integrity %>" crossorigin="anonymous" defer />
+    <script src="<%= @js %>" integrity="<%= @js_integrity %>" crossorigin="anonymous" defer></script>
   </body>
 </html>
