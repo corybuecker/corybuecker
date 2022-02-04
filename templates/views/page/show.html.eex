@@ -1,8 +1,8 @@
 <h1 class="text-3xl"><%= @title %></h1>
 <p class="mb-2">
-  <time datetime={@published}><%= @published %></time>
+  <time datetime="<%= @published %>"><%= @published %></time>
   <%= if @revised do %>
-    (revised on <time datetime={@revised}><%= @revised %></time>)
+    (revised on <time datetime="<%= @revised %>"><%= @revised %></time>)
   <% end %>
 </p>
 <%= Phoenix.HTML.raw(@body) %>
