@@ -4,11 +4,13 @@ config :esbuild,
   version: "0.14.0",
   default: [
     args: ~w(
-      js/app.js
+      js/analytics.ts
+      js/highlight.ts
       --bundle
-      --minify
+      --format=esm
+      --splitting
       --target=es2020
-      --outfile=../output/js/app.js
+      --outdir=../output/js
     ),
     cd: Path.expand("../assets", __DIR__)
   ]

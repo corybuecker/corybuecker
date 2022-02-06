@@ -4,8 +4,18 @@ defmodule Blog do
   def assets do
     File.cp_r("assets/static/", "output/")
     File.cp("output/css/app.css", "output/css/app-#{file_hash_short("output/css/app.css")}.css")
-    Logger.debug(file_hash("output/js/app.js"))
-    File.cp("output/js/app.js", "output/js/app-#{file_hash_short("output/js/app.js")}.js")
+
+    Logger.debug(file_hash("output/js/analytics.js"))
+
+    File.cp(
+      "output/js/analytics.js",
+      "output/js/analytics-#{file_hash_short("output/js/analytics.js")}.js"
+    )
+
+    File.cp(
+      "output/js/highlight.js",
+      "output/js/highlight-#{file_hash_short("output/js/highlight.js")}.js"
+    )
   end
 
   defp file_hash_short(path) do
@@ -49,8 +59,10 @@ defmodule Blog do
             |> Map.merge(%{
               css_integrity: "sha384-#{file_hash("output/css/app.css")}",
               css: "/css/app-#{file_hash_short("output/css/app.css")}.css",
-              js_integrity: "sha384-#{file_hash("output/js/app.js")}",
-              js: "/js/app-#{file_hash_short("output/js/app.js")}.js",
+              analytics_integrity: "sha384-#{file_hash("output/js/analytics.js")}",
+              analytics: "/js/analytics-#{file_hash_short("output/js/analytics.js")}.js",
+              highlight_integrity: "sha384-#{file_hash("output/js/highlight.js")}",
+              highlight: "/js/highlight-#{file_hash_short("output/js/highlight.js")}.js",
               layout: {Blog.Views.Layout, "layout.html"},
               other_pages: []
             })
@@ -85,8 +97,10 @@ defmodule Blog do
         |> Map.merge(%{
           css_integrity: "sha384-#{file_hash("output/css/app.css")}",
           css: "/css/app-#{file_hash_short("output/css/app.css")}.css",
-          js_integrity: "sha384-#{file_hash("output/js/app.js")}",
-          js: "/js/app-#{file_hash_short("output/js/app.js")}.js",
+          analytics_integrity: "sha384-#{file_hash("output/js/analytics.js")}",
+          analytics: "/js/analytics-#{file_hash_short("output/js/analytics.js")}.js",
+          highlight_integrity: "sha384-#{file_hash("output/js/highlight.js")}",
+          highlight: "/js/highlight-#{file_hash_short("output/js/highlight.js")}.js",
           layout: {Blog.Views.Layout, "layout.html"},
           other_pages: others
         })

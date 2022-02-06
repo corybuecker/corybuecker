@@ -14,6 +14,8 @@
 
     <link rel="preload" as="style" href="<%= @css %>" />
     <link rel="stylesheet" integrity="<%= @css_integrity %>" href="<%= @css %>" />
+
+    <script type="module" src="<%= @analytics %>" integrity="<%= @analytics_integrity %>" crossorigin="anonymous" defer></script>
   </head>
   <body>
     <div class="container mx-auto">
@@ -45,6 +47,7 @@
         </main>
       </div>
     </div>
-    <script src="<%= @js %>" integrity="<%= @js_integrity %>" crossorigin="anonymous" defer></script>
+
+    <script type="module" src="<%= @highlight %>" integrity="<%= @highlight_integrity %>" crossorigin="anonymous" defer></script>
   </body>
 </html>
