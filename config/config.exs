@@ -7,6 +7,7 @@ config :esbuild,
       js/analytics.ts
       js/highlight.ts
       --bundle
+      --minify
       --format=esm
       --splitting
       --target=es2020
