@@ -9,11 +9,19 @@ localhost:80 {
 		output stdout
 	}
 
-	header Cache-Control "no-store"
+  header Cache-Control "no-store"
+
+  handle /css/* {
+    header Cache-Control "immutable, public"
+  }
+
+  handle /js/* {
+    header Cache-Control "immutable, public"
+  }
 
 	respond /healthcheck 200
 
-	file_server {
+  file_server {
 		disable_canonical_uris
 	}
 }
@@ -32,9 +40,15 @@ corybuecker.com:80 {
 	header Referrer-Policy "strict-origin-when-cross-origin"
 	header X-Content-Type-Options "nosniff"
 
-	header Cache-Control "no-store"
-	header /css/* Cache-Control "max-age=31536000, immutable, public"
-	header /js/* Cache-Control "max-age=31536000, immutable, public"
+  header Cache-Control "no-store"
+
+  handle /css/* {
+    header Cache-Control "immutable, public"
+  }
+
+  handle /js/* {
+    header Cache-Control "immutable, public"
+  }
 
 	respond /healthcheck 200
 
