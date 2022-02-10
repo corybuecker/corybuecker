@@ -21,6 +21,8 @@ config :tailwind,
   default: [
     args: ~w(
       --config=tailwind.config.js
+      --minify
+      --verbose
       --input=css/app.css
       --output=../output/css/app.css
     ),
