@@ -3,20 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
-
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" color="#ff8a01">
-    <link rel="mask-icon" href="/favicon.svg" color="#ff8a01">
-
-    <%= if @description do %>
-      <meta name="description" content="<%= @description %>" />
-      <title><%= @title %></title>
-    <% end %>
-
-    <link rel="preload" as="style" href="<%= @css %>" />
-    <link rel="stylesheet" integrity="<%= @css_integrity %>" href="<%= @css %>" />
-
-    <script type="module" src="<%= @analytics %>" integrity="<%= @analytics_integrity %>" crossorigin="anonymous"></script>
-
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" color="#ff8a01">
+    <link rel="mask-icon" href="favicon.svg" color="#ff8a01">
+    <title>{{ post.title }}</title>
+    <meta name="description" content="{{ post.description }}" />
+    <link rel="preload" as="style" href="/{{ "app.css" | asset }}" />
+    <link rel="stylesheet" integrity="{{ "app.css" | integrity }}" href="/{{ "app.css" | asset }}" />
+    <script type="module" src="/{{ "analytics.js" | asset }}" integrity="{{ "analytics.js" | integrity }}" crossorigin="anonymous"></script>
     <link rel="webmention" href="https://webmention.io/corybuecker.com/webmention" />
     <link rel="pingback" href="https://webmention.io/corybuecker.com/xmlrpc" />
   </head>
@@ -48,21 +41,20 @@
           </nav>
         </header>
         <main class="basis-9/12 grow py-5 min-w-0 space-y-3">
-          <%= @inner_content %>
-          <%= if length(@other_pages) > 0 do %>
-            <h2 class="text-xl">Older posts</h2>
+          {% render "post", title: post.title, published: post.published, revised: post.revised, body: post.body %}
+          {% if posts %}
+            <h2 class="text-2xl">Older Posts</h2>
             <ul>
-              <%= for older_page <- @other_pages do %>
+              {% for p in posts %}
                 <li>
-                  <a class="underline hover:no-underline" href="/post/<%= older_page.slug %>"><%= older_page.title %></a>
+                  <a href="{{ p.url }}">{{ p.title }}</a>
                 </li>
-              <% end %>
+              {% endfor %}
             </ul>
-          <% end %>
+          {% endif %}
         </main>
       </div>
     </div>
-
-    <script type="module" src="<%= @highlight %>" integrity="<%= @highlight_integrity %>" crossorigin="anonymous" defer></script>
+    <script type="module" src="/{{ "highlight.js" | asset }}" integrity="{{ "highlight.js" | integrity }}" crossorigin="anonymous"></script>
   </body>
 </html>

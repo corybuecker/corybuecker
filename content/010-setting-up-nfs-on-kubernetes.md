@@ -1,7 +1,7 @@
 ---
 title: Setting up Network File System (NFS) on Kubernetes
-published: 2021-01-30T10:21:26Z
-revised: 2021-02-28T20:21:26Z
+published: "2021-01-30T10:21:26Z"
+revised: "2021-02-28T20:21:26Z"
 preview: Before getting to Postfix and Dovecot, I need a large storage space for email. Kubernetes' persistent volumes work very well, but they have a specific limitation for this use case.
 description: Before getting to Postfix and Dovecot, I need a large storage space for email. Kubernetes' persistent volumes work very well, but they have a specific limitation for this use case.
 slug: setting-up-network-file-system-nfs-on-kubernetes

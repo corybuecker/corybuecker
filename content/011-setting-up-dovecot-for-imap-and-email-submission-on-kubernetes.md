@@ -1,7 +1,7 @@
 ---
 title: Setting up Dovecot for IMAP and email submission on Kubernetes (K8s)
-published: 2021-04-05T13:03:27Z
-revised: 2021-04-26T03:03:13Z
+published: "2021-04-05T13:03:27Z"
+revised: "2021-04-26T03:03:13Z"
 preview: Since Dovecot is my IMAP, LMTP, and submission (authorized relay for outgoing email) service, I started there.
 description: Since Dovecot is my IMAP, LMTP, and submission (authorized relay for outgoing email) service, I started there.
 slug: setting-up-dovecot-for-imap-and-email-submission-on-kubernetes

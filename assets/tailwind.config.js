@@ -1,12 +1,7 @@
 module.exports = {
-  content: [
-    './js/**/*.js',
-    '../templates/**/*'
-  ],
+  content: ["templates/**/*.liquid"],
   theme: {
     extend: {},
   },
-  plugins: [
-    require('@tailwindcss/forms')
-  ]
+  plugins: [],
 }

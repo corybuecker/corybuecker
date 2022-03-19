@@ -1,12 +1,15 @@
 {
-  "devDependencies": {
-    "@commitlint/cli": "^16.0.1",
-    "@commitlint/config-conventional": "^16.0.0",
-    "highlight.js": "^11.4.0",
-    "husky": "^7.0.4",
-    "nanoid": ">=3.1.31"
+  "dependencies": {
+    "autoprefixer": "^10.4.4",
+    "esbuild": "^0.14.27",
+    "highlight.js": "^11.5.0",
+    "postcss": "^8.4.12",
+    "tailwindcss": "^3.0.23"
   },
   "scripts": {
-    "prepare": "husky install"
+    "build": "npm run build:clean && npm run build:css && npm run build:js",
+    "build:clean": "rm -rf output",
+    "build:css": "npx tailwind --config=assets/tailwind.config.js --minify --verbose --input=assets/css/app.css --output=output/css/app.css",
+    "build:js": "npx esbuild assets/js/analytics.ts assets/js/highlight.ts --bundle --minify --format=esm --splitting --target=es2020 --outdir=output/js"
   }
 }
