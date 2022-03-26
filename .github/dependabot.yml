@@ -1,10 +1,10 @@
 version: 2
 updates:
-  - package-ecosystem: "mix"
+  - package-ecosystem: "bundler"
     directory: "/"
     schedule:
       interval: "daily"
   - package-ecosystem: "npm"
-    directory: "/assets"
+    directory: "/"
     schedule:
       interval: "daily"

@@ -1,7 +1,7 @@
 ---
 title: Adding TailwindCSS, PostCSS, and optional plugins to a new Phoenix application
-published: 2022-01-29T14:15:19-06
-revised: 2022-01-30T06:28:07-06
+published: "2022-01-29T14:15:19-06"
+revised: "2022-01-30T06:28:07-06"
 preview: Adding a Node-based TailwindCSS + PostCSS pipeline that can be invoked from a Mix task.
 description: Adding a Node-based TailwindCSS +PostCSS pipeline that can be invoked from a Mix task.
 slug: adding-tailwindcss-postcss-optional-plugins-to-a-new-phoenix-application

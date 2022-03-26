@@ -1,7 +1,7 @@
 ---
 title: How to capture simple blog analytics without Google Analytics
-published: 2020-01-05T17:27:46Z
-revised: 2021-02-07 18:24:48
+published: "2020-01-05T17:27:46Z"
+revised: "2021-02-07 18:24:48"
 preview: As part of building my blog, I wanted to capture some analytics with a simple, privacy-focused approach.
 description: Capture simple analytics for a blog with a privacy-oriented approach.
 slug: capture-simple-analytics-without-google-analytics
