@@ -9,6 +9,18 @@
   h2 {
     @apply text-2xl;
   }
+  h3 {
+    @apply text-xl;
+  }
+  h4 {
+    @apply text-lg;
+  }
+  a {
+    @apply underline;
+  }
+  a:hover {
+    @apply no-underline;
+  }
 }
 
 pre code:not(.hljs) {
