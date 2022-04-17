@@ -36,7 +36,7 @@ class Posts
       doc = Loader.new(path:).to_document
       html = Renderer.render(document: doc)
 
-      File.open("output/posts/#{doc.slug}.html", 'w+') { _1.write(html) }
+      File.open("output/posts/#{doc.slug}/index.html", 'w+') { _1.write(html) }
     end
   end
 

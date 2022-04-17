@@ -6,6 +6,7 @@ COPY package-lock.json /app/package-lock.json
 WORKDIR /app
 
 COPY assets /app/assets
+COPY templates /app/templates
 
 RUN npm install
 RUN npm run build
