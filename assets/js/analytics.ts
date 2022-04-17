@@ -12,7 +12,7 @@ const recordPageview = (): undefined => {
   return
 }
 
-// recordPageview()
+recordPageview()
 
 const formatTimeElement = (element: HTMLTimeElement): void => {
   const timeString = element.dateTime
@@ -37,5 +37,5 @@ const trackAnchor = (element: HTMLAnchorElement): undefined => {
 const timeElements = document.getElementsByTagName('time')
 Array.from(timeElements).forEach(formatTimeElement)
 
-// const anchorElements = document.getElementsByTagName('a')
-// Array.from(anchorElements).forEach(trackAnchor)
+const anchorElements = document.getElementsByTagName('a')
+Array.from(anchorElements).forEach(trackAnchor)
