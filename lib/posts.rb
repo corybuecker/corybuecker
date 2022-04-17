@@ -19,8 +19,8 @@ class Posts
 
   def build_homepage
     other_posts = Lister.posts_list.map do |path|
-      doc = Loader.new(path: path).to_document
-      { "url" => "/posts/#{doc.slug}", "title" => doc.title }
+      doc = Loader.new(path:).to_document
+      { 'url' => "/posts/#{doc.slug}", 'title' => doc.title }
     end
 
     doc = Loader.new(path: Lister.homepage).to_document
@@ -35,7 +35,7 @@ class Posts
     Lister.posts.map do |path|
       doc = Loader.new(path:).to_document
       html = Renderer.render(document: doc)
-
+      FileUtils.mkdir_p "output/posts/#{doc.slug}"
       File.open("output/posts/#{doc.slug}/index.html", 'w+') { _1.write(html) }
     end
   end

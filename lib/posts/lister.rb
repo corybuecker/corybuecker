@@ -14,8 +14,6 @@ class Posts
       new.posts
     end
 
-    def initialize; end
-
     def homepage
       list.last
     end
