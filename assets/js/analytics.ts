@@ -1,4 +1,5 @@
-import { EXLYTICS_URL, EXLYTICS_ACCOUNT } from './constants'
+const EXLYTICS_URL = "https://exlytics.corybuecker.com"
+const EXLYTICS_ACCOUNT = "c1c35a41-a439-404f-95a6-cdbfd5323b28"
 
 const recordPageview = (): undefined => {
   const analyticsUrl = new URL(EXLYTICS_URL)

@@ -21,4 +21,4 @@ hljs.registerLanguage('nginx', nginx)
 hljs.registerLanguage('plaintext', plaintext)
 hljs.registerLanguage('sql', sql)
 
-hljs.highlightAll();
+hljs.highlightAll()
