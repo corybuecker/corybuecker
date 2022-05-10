@@ -7,6 +7,6 @@ source 'https://rubygems.org'
 gem 'kramdown', '~> 2.4'
 gem 'liquid', '~> 5.3'
 
-gem 'rubocop', '~> 1.28'
+gem 'rubocop', '~> 1.29'
 
 gem 'kramdown-parser-gfm', '~> 1.1'
