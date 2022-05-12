@@ -54,6 +54,7 @@ pre code.hljs {
 code.hljs {
   padding: 3px 5px;
 }
+
 /* end baseline CSS */
 
 .hljs {
@@ -76,6 +77,7 @@ code.hljs {
 .hljs-comment {
   color: #697070;
 }
+
 .hljs-tag,
 .hljs-punctuation {
   color: #444a;
