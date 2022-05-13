@@ -1,6 +1,6 @@
 version: 2
 updates:
-  - package-ecosystem: "bundler"
+  - package-ecosystem: "mix"
     directory: "/"
     schedule:
       interval: "daily"
