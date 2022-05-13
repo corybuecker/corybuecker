@@ -1,30 +1,25 @@
-FROM node:alpine AS builder-a
-
-COPY package.json /app/package.json
-COPY package-lock.json /app/package-lock.json
+FROM elixir:slim AS elixir_builder
+RUN apt update && apt-get install -y git curl
+RUN curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
+RUN apt-get install -y nodejs
+RUN mix local.hex --force
+RUN mix local.rebar --force
+COPY mix.exs mix.lock package.json package-lock.json /app/
 
 WORKDIR /app
 
-COPY assets /app/assets
-COPY templates /app/templates
-
+RUN mix deps.get
+RUN mix deps.compile
 RUN npm install
-RUN npm run build
-
-FROM ruby:3.1.2-alpine as builder-b
-
-COPY Gemfile /app/Gemfile
-COPY Gemfile.lock /app/Gemfile.lock
-
-WORKDIR /app
-
-RUN bundle
 
 COPY . /app
-COPY --from=builder-a /app/output /app/output
 
-RUN rake build
+RUN mix tailwind default
+RUN mix esbuild default
+
+RUN mix run -e "Blog.assets()"
+RUN mix run -e "Blog.hello()"
 
 FROM caddy:alpine
-COPY --from=builder-b /app/output /usr/share/caddy
+COPY --from=elixir_builder /app/output /usr/share/caddy
 COPY Caddyfile /etc/caddy/Caddyfile
