@@ -1,5 +1,5 @@
 module.exports = {
-  content: ["templates/**/*.liquid"],
+  content: ["../templates/**/*.eex"],
   theme: {
     extend: {},
   },
