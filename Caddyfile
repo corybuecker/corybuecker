@@ -12,11 +12,11 @@ localhost:80 {
 	header Cache-Control "no-store"
 
 	handle /css/* {
-		header Cache-Control "immutable, public"
+		header Cache-Control "public, immutable"
 	}
 
 	handle /js/* {
-		header Cache-Control "immutable, public"
+		header Cache-Control "public, immutable"
 	}
 
 	respond /healthcheck 200
@@ -43,11 +43,11 @@ corybuecker.com:80 {
 	header Cache-Control "no-store"
 
 	handle /css/* {
-		header Cache-Control "immutable, public"
+		header Cache-Control "public, immutable"
 	}
 
 	handle /js/* {
-		header Cache-Control "immutable, public"
+		header Cache-Control "public, immutable"
 	}
 
 	respond /healthcheck 200
