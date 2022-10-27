@@ -24,7 +24,7 @@ defmodule Blog.MixProject do
       {:earmark, "~> 1.4"},
       {:esbuild, "~> 0.4", runtime: false},
       {:jason, "~> 1.2"},
-      {:phoenix_view, "~> 1.0"},
+      {:phoenix_view, "~> 2.0"},
       {:phoenix_html, "~> 3.2"},
       {:tailwind, "~> 0.1"},
       {:yaml_elixir, "~> 2.8"},
