@@ -1,6 +1,6 @@
 FROM elixir:slim AS elixir_builder
 RUN apt update && apt-get install -y git curl
-RUN curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get install -y nodejs
 RUN mix local.hex --force
 RUN mix local.rebar --force
