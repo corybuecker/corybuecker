@@ -12,6 +12,12 @@
       <title><%= @title %></title>
     <% end %>
 
+    <script type="esms-options">
+      {
+        "nonce": "T8rupwLr3WhNwg"
+      }
+    </script>
+
     <link rel="preload" as="style" href="<%= @css %>" />
     <link rel="stylesheet" integrity="<%= @css_integrity %>" href="<%= @css %>" />
 
@@ -62,7 +68,29 @@
         </main>
       </div>
     </div>
+    <!--
+      JSPM Generator Import Map
+      Edit URL: https://generator.jspm.io/#jc5LDsIwDATQLBALTsEJUrphjeAkbmoStyYpdgrh9HwOgOTFrOZJM9uNc7u3uxR57c8rhhnFJYqJv6l+0lPf+6M/dExDF4rg35IhxxUiajeAJgMLqgY1lt+lK7FlGZkaiQFO8AANQks14BvIPJZnNtAcKTeDWxgoV2yWeb3zBxzhD7SlAQ
+    -->
+    <script type="importmap">
+    {
+      "imports": {
+        "highlight.js/lib/core": "https://ga.jspm.io/npm:highlight.js@11.6.0/es/core.js",
+        "highlight.js/lib/languages/bash": "https://ga.jspm.io/npm:highlight.js@11.6.0/es/languages/bash.js",
+        "highlight.js/lib/languages/css": "https://ga.jspm.io/npm:highlight.js@11.6.0/es/languages/css.js",
+        "highlight.js/lib/languages/dockerfile": "https://ga.jspm.io/npm:highlight.js@11.6.0/es/languages/dockerfile.js",
+        "highlight.js/lib/languages/elixir": "https://ga.jspm.io/npm:highlight.js@11.6.0/es/languages/elixir.js",
+        "highlight.js/lib/languages/javascript": "https://ga.jspm.io/npm:highlight.js@11.6.0/es/languages/javascript.js",
+        "highlight.js/lib/languages/markdown": "https://ga.jspm.io/npm:highlight.js@11.6.0/es/languages/markdown.js",
+        "highlight.js/lib/languages/nginx": "https://ga.jspm.io/npm:highlight.js@11.6.0/es/languages/nginx.js",
+        "highlight.js/lib/languages/plaintext": "https://ga.jspm.io/npm:highlight.js@11.6.0/es/languages/plaintext.js",
+        "highlight.js/lib/languages/sql": "https://ga.jspm.io/npm:highlight.js@11.6.0/es/languages/sql.js"
+      }
+    }
+    </script>
 
+    <!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous"></script>
     <script type="module" src="<%= @highlight %>" integrity="<%= @highlight_integrity %>" crossorigin="anonymous" defer></script>
   </body>
 </html>
