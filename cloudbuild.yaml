@@ -1,5 +1,0 @@
-steps:
-- name: gcr.io/kaniko-project/executor:latest
-  args:
-  - --destination=us-central1-docker.pkg.dev/bueckered-272522/github-actions-repo/corybuecker
-  - --cache=true

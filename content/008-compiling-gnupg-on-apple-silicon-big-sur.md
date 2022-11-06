@@ -200,7 +200,6 @@ make install
 
 The test suite will fail pretty broadly for `scute`. However, it appears to require a GnuPG agent to be running, which I don't have yet.
 
-
 ### `ntbtls`
 
 `ntbtls` is a very small TLS 1.2-only implementation used only by GnuPG tools.
