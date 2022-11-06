@@ -8,6 +8,12 @@ erl_crash.dump
 *.beam
 /config/*.secret.exs
 .elixir_ls/
-
 /node_modules/
+blog-*.tar
+/tmp/
+/.elixir_ls/
+/assets/node_modules
 /output/
+/node_modules/
+/package.json
+/package-lock.json

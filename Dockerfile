@@ -1,18 +1,18 @@
 FROM elixir:slim AS elixir_builder
-RUN apt update && apt-get install -y git curl
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-RUN apt-get install -y nodejs
 RUN mix local.hex --force
 RUN mix local.rebar --force
-COPY mix.exs mix.lock package.json package-lock.json /app/
+COPY mix.exs mix.lock /app/
 
 WORKDIR /app
 
 RUN mix deps.get
 RUN mix deps.compile
-RUN npm install
 
-COPY . /app
+COPY assets /app/assets
+COPY config /app/config
+COPY content /app/content
+COPY lib /app/lib
+COPY templates /app/templates
 
 RUN mix tailwind default
 RUN mix esbuild default
