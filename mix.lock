@@ -1,6 +1,6 @@
 %{
   "castore": {:hex, :castore, "0.1.18", "deb5b9ab02400561b6f5708f3e7660fc35ca2d51bfc6a940d2f513f89c2975fc", [:mix], [], "hexpm", "61bbaf6452b782ef80b33cdb45701afbcf0a918a45ebe7e73f1130d661e66a06"},
-  "earmark": {:hex, :earmark, "1.4.33", "2b33a505180583f98bfa17317f03973b52081bdb24a11be05a7f4fa6d64dd8bf", [:mix], [{:earmark_parser, "~> 1.4.29", [hex: :earmark_parser, repo: "hexpm", optional: false]}], "hexpm", "21b31363d6a0a70802cfbaf2de88355778aa76654298a072bce2e01d1858ae06"},
+  "earmark": {:hex, :earmark, "1.4.34", "d7f89d3bbd7567a0bffc465e0a949f8f8dcbe43909c3acf96f4761a302cea10c", [:mix], [{:earmark_parser, "~> 1.4.29", [hex: :earmark_parser, repo: "hexpm", optional: false]}], "hexpm", "90b106f3dad85b133b10d7d628167c88246123fd1cecb4557d83d21ec9e65504"},
   "earmark_parser": {:hex, :earmark_parser, "1.4.29", "149d50dcb3a93d9f3d6f3ecf18c918fb5a2d3c001b5d3305c926cddfbd33355b", [:mix], [], "hexpm", "4902af1b3eb139016aed210888748db8070b8125c2342ce3dcae4f38dcc63503"},
   "esbuild": {:hex, :esbuild, "0.5.0", "d5bb08ff049d7880ee3609ed5c4b864bd2f46445ea40b16b4acead724fb4c4a3", [:mix], [{:castore, ">= 0.0.0", [hex: :castore, repo: "hexpm", optional: false]}], "hexpm", "f183a0b332d963c4cfaf585477695ea59eef9a6f2204fdd0efa00e099694ffe5"},
   "jason": {:hex, :jason, "1.4.0", "e855647bc964a44e2f67df589ccf49105ae039d4179db7f6271dfd3843dc27e6", [:mix], [{:decimal, "~> 1.0 or ~> 2.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm", "79a3791085b2a0f743ca04cec0f7be26443738779d09302e01318f97bdb82121"},
