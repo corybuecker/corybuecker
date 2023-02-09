@@ -59,9 +59,9 @@ Very next on my to-do list for Exlytics is adding a site identifier so that the 
 
 ## Reporting page views by day and page
 
-[D3.js](https://d3js.org/) is another technology skill I try to keep up-to-date. At a previous  job, we built complex usage-reporting dashboards using v2 of D3.  Building charts of page views and link clicks is trivial with D3.js.
+[D3.js](https://d3js.org/) is another technology skill I try to keep up-to-date. At a previous job, we built complex usage-reporting dashboards using v2 of D3. Building charts of page views and link clicks is trivial with D3.js.
 
-I decoupled the event collection application from the reporting application. They are both simplistic enough to use a single application or  an umbrella application. I wanted to use the [Phoenix Framework](https://www.phoenixframework.org/) for the dashboard application for later access to OAuth 2.0 and OpenID authentication plugins.
+I decoupled the event collection application from the reporting application. They are both simplistic enough to use a single application or an umbrella application. I wanted to use the [Phoenix Framework](https://www.phoenixframework.org/) for the dashboard application for later access to OAuth 2.0 and OpenID authentication plugins.
 
 [Exlytics Dashboard](https://github.com/corybuecker/exlytics-dashboard) is open-source and is in a very simple state at the moment. Visualizations are a lot of fun to build.
 

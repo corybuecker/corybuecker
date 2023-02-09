@@ -58,7 +58,7 @@ code.hljs {
 /* end baseline CSS */
 
 .hljs {
-  background: #F3F3F3;
+  background: #f3f3f3;
   color: #444;
 }
 
@@ -72,7 +72,8 @@ code.hljs {
 .hljs-formula,
 .hljs-attr,
 .hljs-property,
-.hljs-params {}
+.hljs-params {
+}
 
 .hljs-comment {
   color: #697070;
@@ -88,17 +89,14 @@ code.hljs {
   color: #444;
 }
 
-
 .hljs-keyword,
 .hljs-attribute,
 .hljs-selector-tag,
 .hljs-meta .hljs-keyword,
-
 .hljs-doctag,
 .hljs-name {
   font-weight: bold;
 }
-
 
 /* User color: hue: 0 */
 
@@ -143,7 +141,6 @@ code.hljs {
   color: #397300;
 }
 
-
 /* Meta color: hue: 200 */
 
 .hljs-meta {
@@ -153,7 +150,6 @@ code.hljs {
 .hljs-meta .hljs-string {
   color: #38a;
 }
-
 
 /* Misc effects */
 
