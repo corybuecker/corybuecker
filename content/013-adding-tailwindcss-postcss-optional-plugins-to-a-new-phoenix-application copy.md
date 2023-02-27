@@ -91,8 +91,8 @@ module.exports = {
     "postcss-import": {},
     tailwindcss: {},
     autoprefixer: {},
-  },
-};
+  }
+}
 ```
 
 Then I removed the tailwind package and the changes to `config.exs`. The rest of the pipeline will be completely Node-based. Install all of the needed packages with NPM.

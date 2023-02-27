@@ -67,7 +67,7 @@ jobs:
 
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@0.1.2
         with:
-          version: "274.0.1"
+          version: '274.0.1'
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
       - name: Configure Docker

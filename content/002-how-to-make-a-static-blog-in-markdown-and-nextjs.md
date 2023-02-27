@@ -24,6 +24,7 @@ Create a `content` folder in your new project and add a sample Markdown file wit
 title: An introduction
 published: 2019-11-30
 ---
+
 Hi!
 ```
 
@@ -40,30 +41,30 @@ Everytime the Next.js development server starts or the site is exported, the con
 I wrote this simple script to convert the content. Please note that this step does not convert the Markdown into HTML. Rather, it converts the front matter into attributes and aggregates all of the content files into an array.
 
 ```javascript
-const fm = require("front-matter");
-const fs = require("fs");
-const path = require("path");
+const fm = require('front-matter')
+const fs = require('fs')
+const path = require('path')
 
-const markdownPages = fs.readdirSync(path.join(process.cwd(), "content"));
+const markdownPages = fs.readdirSync(path.join(process.cwd(), 'content'))
 
-console.log(markdownPages);
+console.log(markdownPages)
 
-const compiledPages = [];
+const compiledPages = []
 
-compiledPages.forEach((pagePath) => {
+compiledPages.forEach(pagePath => {
   const contents = fm(
-    fs.readFileSync(path.join(process.cwd(), "content", pagePath), "utf-8")
-  );
+    fs.readFileSync(path.join(process.cwd(), 'content', pagePath), 'utf-8')
+  )
 
-  contents.path = pagePath.replace(".md", "");
+  contents.path = pagePath.replace('.md', '')
 
-  compiledPages.push(contents);
-});
+  compiledPages.push(contents)
+})
 
 fs.writeFileSync(
-  path.join(process.cwd(), "src", "content.json"),
+  path.join(process.cwd(), 'src', 'content.json'),
   JSON.stringify(compiledPages.reverse())
-);
+)
 ```
 
 ## Next.JS dynamic routing
@@ -94,29 +95,26 @@ Post.getInitialProps = async ({ query }) =>
 The last step is to tell Next.js about the dynamic routes based on the content JSON file. This is accomplished by [creating a `next.config.js` file](https://nextjs.org/docs#custom-configuration).
 
 ```javascript
-const content = require("./src/content.json");
+const content = require('./src/content.json')
 
 module.exports = {
   exportPathMap: async function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
   ) {
-    return content.reduce(
-      (pages, page) => {
-        pages[`/post/${page.path}`] = {
-          page: "/post/[slug]",
-          query: { slug: page.path },
-        };
-
-        return pages;
-      },
-      {
-        "/index": { page: "/index" },
-        "/": { page: "/" },
+    return content.reduce((pages, page) => {
+      pages[`/post/${page.path}`] = {
+        page: '/post/[slug]',
+        query: { slug: page.path }
       }
-    );
-  },
-};
+
+      return pages
+    }, {
+      '/index': { page: '/index' },
+      '/': { page: '/' }
+    })
+  }
+}
 ```
 
 At this point, the contents of the `out` directory can be served from a Cloud Storage or S3 bucket.
