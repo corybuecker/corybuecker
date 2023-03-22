@@ -95,15 +95,15 @@ Any request sent to Exlytics will be stored in Firestore. The simplest approach 
 
 ```javascript
 const recordPageview = () => {
-  const analyticsUrl = new URL("https://exlytics.corybuecker.com");
-  const pageUrl = new URL(window.location.toString());
+  const analyticsUrl = new URL('https://exlytics.corybuecker.com')
+  const pageUrl = new URL(window.location.toString())
 
-  analyticsUrl.search = `page=${pageUrl.pathname}`;
+  analyticsUrl.search = `page=${pageUrl.pathname}`
 
-  return navigator.sendBeacon(analyticsUrl.toString());
-};
+  return navigator.sendBeacon(analyticsUrl.toString())
+}
 
-recordPageview();
+recordPageview()
 ```
 
 Note the use of [`sendBeacon`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon); the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) would work well here, but I have another reason to use the [Navigator API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator). Using `sendBeacon` captures _outgoing_ link clicks without blocking the load of the third-party webpage.

@@ -107,7 +107,7 @@ spec:
     - nfsvers=4.1
   nfs:
     path: /mnt/disks/network_storage_disk/mailserver
-    server: { internal_vm_ip_address }
+    server: {internal_vm_ip_address}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
