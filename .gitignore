@@ -17,3 +17,4 @@ blog-*.tar
 /node_modules/
 /package.json
 /package-lock.json
+cloudbuild.yaml
