@@ -85,9 +85,10 @@ defmodule Blog do
 
     [homepage | _] = all_pages
     homepage = Post.from_file("content/#{homepage}")
+    File.write("output/sitemap.xml", Sitemap.build(others))
+
     [_ | others] = others
 
-    File.write("output/sitemap.xml", Sitemap.build(others))
 
     html =
       Phoenix.View.render_to_string(
