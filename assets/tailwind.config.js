@@ -1,12 +1,8 @@
-// See the Tailwind configuration guide for advanced usage
-// https://tailwindcss.com/docs/configuration
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './js/**/*.js',
-    '../templates/**/*'
-  ],
+  content: ["../templates/**/*.hbs"],
   theme: {
     extend: {},
   },
-  plugins: []
-}
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
+};
