@@ -7,9 +7,10 @@ diesel::table! {
         slug -> Varchar,
         #[max_length = 255]
         title -> Varchar,
-        published -> Nullable<Timestamptz>,
         preview -> Nullable<Text>,
         description -> Text,
+        published_at -> Nullable<Timestamptz>,
+        revised_at -> Nullable<Timestamptz>,
         content -> Text,
         created_at -> Timestamptz,
         updated_at -> Timestamptz,
