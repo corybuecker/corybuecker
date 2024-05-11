@@ -1,5 +1,5 @@
-mod authentication_routes;
-mod routes;
+mod authentication;
+mod pages;
 use crate::Db;
 use rocket::request::Outcome;
 use rocket::{request::FromRequest, Request, Route};
@@ -53,8 +53,12 @@ impl<'a> FromRequest<'a> for User {
 
 pub fn admin_routes() -> Vec<Route> {
     return routes![
-        authentication_routes::login,
-        authentication_routes::callback,
-        routes::pages
+        authentication::login,
+        authentication::callback,
+        pages::pages,
+        pages::new,
+        pages::create,
+        pages::edit,
+        pages::patch
     ];
 }

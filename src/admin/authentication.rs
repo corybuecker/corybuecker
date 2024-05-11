@@ -4,7 +4,7 @@ use openidconnect::{
     AuthorizationCode, ClientId, ClientSecret, CsrfToken, IssuerUrl, Nonce, RedirectUrl, Scope,
     TokenResponse,
 };
-use rocket::http::CookieJar;
+use rocket::http::{Cookie, CookieJar};
 use rocket_dyn_templates::{context, Template};
 use std::env;
 
@@ -39,6 +39,7 @@ pub async fn login(cookies: &CookieJar<'_>) -> Template {
         .add_scope(Scope::new("openid".to_string()))
         .url();
 
+    cookies.remove_private("email");
     cookies.add_private(("nonce", nonce.secret().clone()));
 
     return Template::render("admin/login", context! {auth_url: auth_url.to_string()});
@@ -93,5 +94,7 @@ pub async fn callback(cookies: &CookieJar<'_>, code: &str) {
 
     cookies.remove_private("nonce");
 
-    cookies.add_private(("email", claims.email().unwrap().to_string()))
+    let email_cookie = Cookie::build(("email", claims.email().unwrap().to_string())).expires(None);
+
+    cookies.add_private(email_cookie);
 }

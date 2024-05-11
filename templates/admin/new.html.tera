@@ -1,0 +1,13 @@
+{% extends "layout" %}
+{% block content %}
+<form method="post" hx-boost="true" class="flex flex-col" action="/admin/pages">
+  <label for="slug">Slug</label>
+  <input type="text" name="slug" id="slug" />
+
+  <label for="title">Title</label>
+  <input type="text" name="title" />
+  
+  <textarea name="content"></textarea>
+  <button type="submit">Save</button>
+</form>
+{% endblock content %}
