@@ -1,15 +1,16 @@
+use axum::extract::Query;
+use axum::response::Html;
 use openidconnect::core::{CoreAuthenticationFlow, CoreClient, CoreProviderMetadata};
 use openidconnect::reqwest::async_http_client;
 use openidconnect::{
     AuthorizationCode, ClientId, ClientSecret, CsrfToken, IssuerUrl, Nonce, RedirectUrl, Scope,
     TokenResponse,
 };
-use rocket::http::{Cookie, CookieJar};
-use rocket_dyn_templates::{context, Template};
+use serde::Deserialize;
 use std::env;
+use tower_cookies::{Cookie, Cookies, Key};
 
-#[get("/login")]
-pub async fn login(cookies: &CookieJar<'_>) -> Template {
+pub async fn login(cookies: Cookies) -> Html<String> {
     let discovery_url = IssuerUrl::new("https://accounts.google.com".to_string())
         .ok()
         .unwrap();
@@ -39,14 +40,29 @@ pub async fn login(cookies: &CookieJar<'_>) -> Template {
         .add_scope(Scope::new("openid".to_string()))
         .url();
 
-    cookies.remove_private("email");
-    cookies.add_private(("nonce", nonce.secret().clone()));
+    let cookie = Cookie::build(("nonce", nonce.secret().clone()))
+        .expires(None)
+        .http_only(true)
+        .path("/admin")
+        .build();
 
-    return Template::render("admin/login", context! {auth_url: auth_url.to_string()});
+    let key_base = env::var("SECRET_KEY").unwrap();
+    let key = Key::from(key_base.as_bytes());
+    let signed_cookies = cookies.signed(&key);
+
+    signed_cookies.add(cookie);
+
+    return Html(auth_url.to_string());
 }
 
-#[get("/login/callback?<code>")]
-pub async fn callback(cookies: &CookieJar<'_>, code: &str) {
+#[derive(Deserialize, Debug)]
+pub struct GoogleCallback {
+    code: String,
+}
+pub async fn callback(
+    Query(callback): Query<GoogleCallback>,
+    cookies: Cookies,
+) -> Html<&'static str> {
     let discovery_url = IssuerUrl::new("https://accounts.google.com".to_string())
         .ok()
         .unwrap();
@@ -66,10 +82,15 @@ pub async fn callback(cookies: &CookieJar<'_>, code: &str) {
         RedirectUrl::new("http://localhost:8000/admin/login/callback".to_string()).unwrap(),
     );
 
-    let nonce = Nonce::new(cookies.get_private("nonce").unwrap().value().to_string());
+    let key_base = env::var("SECRET_KEY").unwrap();
+    let key = Key::from(key_base.as_bytes());
+    let signed_cookies = cookies.signed(&key);
+
+    let nonce_cookie = signed_cookies.get("nonce").unwrap().value().to_string();
+    let nonce = Nonce::new(nonce_cookie);
 
     let token_response = client
-        .exchange_code(AuthorizationCode::new(code.to_string()))
+        .exchange_code(AuthorizationCode::new(callback.code.to_string()))
         .request_async(async_http_client)
         .await
         .unwrap();
@@ -92,9 +113,19 @@ pub async fn callback(cookies: &CookieJar<'_>, code: &str) {
             .unwrap_or("<not provided>"),
     );
 
-    cookies.remove_private("nonce");
+    let cookie = Cookie::build(("email", claims.email().unwrap().to_string()))
+        .expires(None)
+        .http_only(true)
+        .path("/admin")
+        .build();
 
-    let email_cookie = Cookie::build(("email", claims.email().unwrap().to_string())).expires(None);
+    signed_cookies.add(cookie);
+    let nonce = Cookie::build(("nonce", ""))
+        .expires(None)
+        .http_only(true)
+        .path("/admin")
+        .build();
+    signed_cookies.remove(nonce);
 
-    cookies.add_private(email_cookie);
+    return Html("OK");
 }

@@ -1,100 +1,146 @@
-use super::User;
-use crate::Db;
-use rocket::form::Form;
-use rocket::response::Redirect;
-use rocket_db_pools::Connection;
-use rocket_dyn_templates::{context, Template};
+use super::Page;
+use super::SharedState;
+use axum::extract::Path;
+use axum::{
+    extract::State,
+    response::{Html, IntoResponse, Redirect, Response},
+    Form,
+};
+use chrono::NaiveDate;
+use futures::TryStreamExt;
+use mongodb::bson::doc;
+use mongodb::bson::oid::ObjectId;
+use mongodb::Collection;
+use serde::{Deserialize, Serialize};
+use std::str::FromStr;
+use std::sync::Arc;
+use tera::Context;
 
-#[derive(FromForm)]
-pub struct PostForm<'r> {
-    slug: &'r str,
-    title: &'r str,
-    content: &'r str,
-    publish: Option<bool>,
+#[derive(Deserialize, Serialize)]
+pub struct PostForm {
+    content: String,
+    description: String,
+    preview: String,
+    published_at: Option<String>,
+    revised_at: Option<String>,
+    slug: String,
+    title: String,
 }
 
-#[get("/pages")]
-pub async fn pages(_u: User, db: Connection<Db>) -> Template {
-    let raw_pages = db.query("select * from pages", &[]).await.unwrap();
-    let mut pages = Vec::new();
+pub async fn index(State(state): State<Arc<SharedState>>) -> Response {
+    let collection: Collection<super::Page> = state.mongo.database("blog").collection("pages");
 
-    for page in raw_pages {
-        let id: i32 = page.get("id");
-        let title: String = page.get("title");
-        let content: String = page.get("content");
-        pages.push(context! {
-            title: title,
-            content: content,
-            id: id,
-        })
+    let mut cursor = collection.find(doc! {}, None).await.unwrap();
+
+    let mut pages: Vec<Page> = Vec::new();
+
+    while let Some(mut page) = cursor.try_next().await.unwrap() {
+        page.id = Some(page._id.to_hex());
+        pages.push(page)
     }
 
-    return Template::render("admin/pages", context! {pages: pages});
+    let mut context = tera::Context::new();
+    context.insert("pages", &pages);
+    println!("{:?}", pages);
+
+    let rendered = state.tera.render("admin/index.html", &context).unwrap();
+
+    return Html(rendered).into_response();
 }
 
-#[get("/pages/new")]
-pub fn new(_u: User) -> Template {
-    return Template::render("admin/new", context! {});
-}
-
-#[post("/pages", data = "<page>")]
-pub async fn create(_u: User, db: Connection<Db>, page: Form<PostForm<'_>>) -> Redirect {
-    db.execute(
-        "insert into pages (slug, title, content, description, updated_at) values ($1, $2, $3, $3,now())",
-        &[&page.slug, &page.title, &page.content],
-    )
-    .await
-    .unwrap();
-    return Redirect::to(uri!("/admin/pages"));
-}
-
-#[get("/pages/<id>/edit")]
-pub async fn edit(_u: User, db: Connection<Db>, id: i32) -> Template {
-    let page = db
-        .query_one("select * from pages where id = $1", &[&id])
-        .await
+pub async fn new(State(state): State<Arc<SharedState>>) -> Response {
+    let rendered = state
+        .tera
+        .render("admin/new.html", &Context::new())
         .unwrap();
 
-    let id: i32 = page.get("id");
-    let title: String = page.get("title");
-    let content: String = page.get("content");
-    let slug: String = page.get("slug");
-
-    return Template::render(
-        "admin/edit",
-        context! {id: id, title: title, content: content, slug: slug},
-    );
+    Html(rendered).into_response()
 }
 
-#[post("/pages/<id>", data = "<page>")]
-pub async fn patch(_u: User, db: Connection<Db>, id: i32, page: Form<PostForm<'_>>) -> Redirect {
-    println!("{}", page.content);
+pub async fn edit(State(state): State<Arc<SharedState>>, Path(id): Path<String>) -> Response {
+    let tera = &state.tera;
+    let database: &mongodb::Database = &state.mongo.database("blog");
+    let mut context = tera::Context::new();
+    let oid = ObjectId::from_str(&id).unwrap();
 
-    db.execute(
-        "update pages set title = $1, content = $2, updated_at = now() where id = $3",
-        &[&page.title, &page.content, &id],
-    )
-    .await
-    .unwrap();
+    let collection: Collection<Page> = database.collection("pages");
+    let mut page = collection
+        .find_one(doc! {"_id": oid}, None)
+        .await
+        .unwrap()
+        .unwrap();
 
-    match page.publish {
-        None => {
-            let _ = db
-                .execute(
-                    "update pages set published_at = null, updated_at = now() where id = $1",
-                    &[&id],
-                )
-                .await;
-        }
-        Some(publish) => {
-            let _ = db
-                .execute(
-                    "update pages set published_at = $1, updated_at = now() where id = $2",
-                    &[&publish, &id],
-                )
-                .await;
+    page.id = Some(page._id.to_string());
+
+    context.insert("page", &page);
+    let rendered = tera.render("admin/edit.html", &context).unwrap();
+
+    Html(rendered).into_response()
+}
+
+pub async fn create(
+    State(shared_state): State<Arc<SharedState>>,
+    Form(form): Form<PostForm>,
+) -> Response {
+    let collection = shared_state.mongo.database("blog").collection("pages");
+
+    let new_page = Page {
+        _id: mongodb::bson::oid::ObjectId::new(),
+        content: form.content.clone(),
+        created_at: mongodb::bson::DateTime::now(),
+        description: form.description,
+        id: None,
+        markdown: form.content,
+        preview: form.preview,
+        published_at: None,
+        revised_at: None,
+        slug: form.slug,
+        title: form.title,
+        updated_at: mongodb::bson::DateTime::now(),
+    };
+
+    let _result = collection.insert_one(new_page, None).await;
+
+    return Redirect::to("/admin/pages").into_response();
+}
+
+pub async fn update(
+    State(state): State<Arc<SharedState>>,
+    Path(id): Path<String>,
+    Form(form): Form<PostForm>,
+) -> Response {
+    let database: &mongodb::Database = &state.mongo.database("blog");
+    let collection: Collection<Page> = database.collection("pages");
+    let oid = ObjectId::from_str(&id).unwrap();
+
+    let mut page = collection
+        .find_one(doc! {"_id": oid}, None)
+        .await
+        .unwrap()
+        .unwrap();
+
+    if let Some(date) = form.published_at {
+        match NaiveDate::parse_from_str(&date, "%Y-%m-%d") {
+            Ok(date) => page.published_at = Some(date.and_hms_opt(0, 0, 0).unwrap().and_utc()),
+            Err(err) => {
+                println!("{}", err);
+            }
         }
     }
 
-    return Redirect::to(uri!("/admin/pages"));
+    if let Some(date) = form.revised_at {
+        match NaiveDate::parse_from_str(&date, "%Y-%m-%d") {
+            Ok(date) => page.revised_at = Some(date.and_hms_opt(0, 0, 0).unwrap().and_utc()),
+            Err(_) => {}
+        }
+    }
+
+    page.content = form.content;
+    page.description = form.description;
+    page.title = form.title;
+    page.preview = form.preview;
+
+    let _result = collection.replace_one(doc! {"_id": oid}, page, None).await;
+
+    return Redirect::to("/admin/pages").into_response();
 }

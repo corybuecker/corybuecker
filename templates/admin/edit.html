@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<form method="post" hx-boost="true" class="flex flex-col" action="/admin/pages/{{page.id}}">
+  <label for="slug">Slug</label>
+  <input type="text" name="slug" id="slug" value="{{page.slug}}" />
+
+  <label for="title">Title</label>
+  <input type="text" name="title" value="{{page.title}}" />
+
+  <label for="published_at">Published</label>
+  <input type="date" name="published_at" value="{{page.published_at}}" />
+
+  <label for="revised_at">Revised</label>
+  <input type="date" name="revised_at" value="{{page.revised_at}}" />
+
+  <label for="preview">Preview</label>
+  <textarea name="preview">{{page.preview | safe}}</textarea>
+
+  <label for="description">Description</label>
+  <textarea name="description">{{page.description | safe}}</textarea>
+
+  <label for="content">Content</label>
+  <textarea name="content">{{page.content | safe}}</textarea>
+  <button type="submit">Save</button>
+</form>
+{% endblock content %}
