@@ -1,10 +1,20 @@
-mod authentication;
+use std::{env, sync::Arc};
 mod pages;
-use crate::Db;
-use rocket::request::Outcome;
-use rocket::{request::FromRequest, Request, Route};
-use rocket_db_pools::Connection;
-
+use super::SharedState;
+use axum::{
+    extract::{Request, State},
+    http::StatusCode,
+    middleware::{self, Next},
+    response::{IntoResponse, Response},
+    routing::get,
+    Router,
+};
+use mongodb::bson::doc;
+use serde::Deserialize;
+use tower_cookies::{CookieManagerLayer, Cookies, Key};
+mod authentication;
+use super::Page;
+#[derive(Deserialize)]
 struct User {
     email: String,
 }
@@ -14,51 +24,48 @@ enum AuthenticationError {
     NoEmail,
 }
 
-#[rocket::async_trait]
-impl<'a> FromRequest<'a> for User {
-    type Error = AuthenticationError;
+async fn require_authentication(
+    State(state): State<Arc<SharedState>>,
+    // you can add more extractors here but the last
+    // extractor must implement `FromRequest` which
+    // `Request` does,
+    cookies: Cookies,
+    request: Request,
+    next: Next,
+) -> Response {
+    let email = cookies
+        .signed(&Key::from(env::var("SECRET_KEY").unwrap().as_bytes()))
+        .get("email");
 
-    async fn from_request(req: &'a Request<'_>) -> Outcome<Self, Self::Error> {
-        let database = req.guard::<Connection<Db>>().await.unwrap();
+    if email.is_some() {
+        let mongo = state.mongo.database("blog").collection::<User>("users");
 
-        let cookies = req.cookies();
-        let email_cookie = cookies.get_private("email");
-
-        match email_cookie {
-            Some(email_cookie) => {
-                let email = email_cookie.value().to_string();
-                let user = database
-                    .query_one("select 1 from users where email = $1 limit 1", &[&email])
-                    .await;
-
-                match user {
-                    Ok(_) => return Outcome::Success(User { email: email }),
-                    Err(_) => {
-                        return Outcome::Error((
-                            rocket::http::Status::Unauthorized,
-                            AuthenticationError::NoEmail,
-                        ))
-                    }
-                }
-            }
-            None => {
-                return Outcome::Error((
-                    rocket::http::Status::Unauthorized,
-                    AuthenticationError::NoEmail,
-                ))
-            }
+        let result = mongo
+            .find_one(doc! {"email":  email.unwrap().value().to_string() }, None)
+            .await;
+        match result {
+            Ok(_) => next.run(request).await,
+            Err(_) => StatusCode::FORBIDDEN.into_response(),
         }
+    } else {
+        return StatusCode::FORBIDDEN.into_response();
     }
 }
 
-pub fn admin_routes() -> Vec<Route> {
-    return routes![
-        authentication::login,
-        authentication::callback,
-        pages::pages,
-        pages::new,
-        pages::create,
-        pages::edit,
-        pages::patch
-    ];
+pub fn admin_routes(state: Arc<super::SharedState>) -> Router<Arc<super::SharedState>> {
+    let pages = Router::new()
+        .route("/", get(pages::index).post(pages::create))
+        .route("/new", get(pages::new))
+        .route("/:id", get(pages::edit).post(pages::update))
+        .route_layer(middleware::from_fn_with_state(
+            state.clone(),
+            require_authentication,
+        ))
+        .layer(CookieManagerLayer::new());
+
+    return Router::new()
+        .route("/login", get(authentication::login))
+        .route("/login/callback", get(authentication::callback))
+        .nest("/pages", pages)
+        .layer(CookieManagerLayer::new());
 }

@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<div hx-boost="true"><a href="/admin/pages/new">Add</a></div>
+<ul>
+  {% for page in pages %}
+  <li>
+    <a href="/admin/pages/{{page.id}}">{{page.title}}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock content %}

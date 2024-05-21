@@ -1,17 +1,26 @@
 [package]
-name = "corybuecker"
+name = "blog"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-comrak = "0.24.1"
-openidconnect = { version = "3.5.0", features = ["reqwest"] }
-rocket = { version = "0.5.0", features = ["secrets"] }
-rocket_db_pools = { version = "0.1.0", features = ["deadpool_postgres"] }
-rocket_dyn_templates = { version = "0.1.0", features = ["tera"] }
-serde = "1.0.202"
+axum = "0.7.5"
+bson = { version = "2.10.0", features = ["chrono-0_4", "serde_with-3"] }
+chrono = "0.4.38"
+comrak = "0.23.0"
+futures = "0.3.28"
 log = "0.4.21"
+mongodb = "2.8.2"
+openidconnect = { version = "3.5.0", features = ["reqwest"] }
+serde = "1.0.202"
+serde_with = "3.8.1"
+tera = "1.19.1"
+tokio = { version = "1.37.0", features = ["full"] }
+tower-cookies = { version = "0.10.0", features = ["signed"] }
+tower-http = { version = "0.5.2", features = ["trace", "fs"] }
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 
 # Also `cargo install diesel_cli --no-default-features --features postgres`.
