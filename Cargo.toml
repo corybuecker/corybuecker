@@ -9,7 +9,7 @@ edition = "2021"
 axum = "0.7.5"
 bson = { version = "2.10.0", features = ["chrono-0_4", "serde_with-3"] }
 chrono = "0.4.38"
-comrak = "0.23.0"
+comrak = "0.24.1"
 futures = "0.3.28"
 log = "0.4.21"
 mongodb = "2.8.2"
