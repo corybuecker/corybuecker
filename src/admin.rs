@@ -14,7 +14,8 @@ use serde::Deserialize;
 use tower_cookies::{CookieManagerLayer, Cookies, Key};
 mod authentication;
 use super::Page;
-#[derive(Deserialize)]
+
+#[derive(Deserialize, Debug)]
 struct User {
     email: String,
 }
@@ -26,9 +27,6 @@ enum AuthenticationError {
 
 async fn require_authentication(
     State(state): State<Arc<SharedState>>,
-    // you can add more extractors here but the last
-    // extractor must implement `FromRequest` which
-    // `Request` does,
     cookies: Cookies,
     request: Request,
     next: Next,
@@ -43,12 +41,14 @@ async fn require_authentication(
         let result = mongo
             .find_one(doc! {"email":  email.unwrap().value().to_string() }, None)
             .await;
+
         match result {
+            Ok(None) => StatusCode::FORBIDDEN.into_response(),
             Ok(_) => next.run(request).await,
             Err(_) => StatusCode::FORBIDDEN.into_response(),
         }
     } else {
-        return StatusCode::FORBIDDEN.into_response();
+        StatusCode::FORBIDDEN.into_response()
     }
 }
 

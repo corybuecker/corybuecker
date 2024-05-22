@@ -16,7 +16,7 @@ mongodb = "2.8.2"
 openidconnect = { version = "3.5.0", features = ["reqwest"] }
 serde = "1.0.202"
 serde_with = "3.8.1"
-tera = "1.19.1"
+tera = { version = "1.19.1", features = ["builtins"] }
 tokio = { version = "1.37.0", features = ["full"] }
 tower-cookies = { version = "0.10.0", features = ["signed"] }
 tower-http = { version = "0.5.2", features = ["trace", "fs"] }

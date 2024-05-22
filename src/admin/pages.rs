@@ -7,6 +7,8 @@ use axum::{
     Form,
 };
 use chrono::NaiveDate;
+use comrak::markdown_to_html;
+use comrak::Options;
 use futures::TryStreamExt;
 use mongodb::bson::doc;
 use mongodb::bson::oid::ObjectId;
@@ -41,7 +43,6 @@ pub async fn index(State(state): State<Arc<SharedState>>) -> Response {
 
     let mut context = tera::Context::new();
     context.insert("pages", &pages);
-    println!("{:?}", pages);
 
     let rendered = state.tera.render("admin/index.html", &context).unwrap();
 
@@ -86,11 +87,11 @@ pub async fn create(
 
     let new_page = Page {
         _id: mongodb::bson::oid::ObjectId::new(),
-        content: form.content.clone(),
+        markdown: markdown_to_html(&form.content, &Options::default()),
+        content: form.content,
         created_at: mongodb::bson::DateTime::now(),
         description: form.description,
         id: None,
-        markdown: form.content,
         preview: form.preview,
         published_at: None,
         revised_at: None,
@@ -122,9 +123,7 @@ pub async fn update(
     if let Some(date) = form.published_at {
         match NaiveDate::parse_from_str(&date, "%Y-%m-%d") {
             Ok(date) => page.published_at = Some(date.and_hms_opt(0, 0, 0).unwrap().and_utc()),
-            Err(err) => {
-                println!("{}", err);
-            }
+            Err(_) => {}
         }
     }
 
@@ -135,6 +134,7 @@ pub async fn update(
         }
     }
 
+    page.markdown = markdown_to_html(&form.content, &Options::default());
     page.content = form.content;
     page.description = form.description;
     page.title = form.title;

@@ -1,4 +1,4 @@
-use std::{env, sync::Arc};
+use std::{collections::HashMap, env, sync::Arc};
 mod admin;
 use axum::{
     extract::{Path, State},
@@ -10,7 +10,8 @@ use futures::TryStreamExt;
 use mongodb::{bson::doc, options::FindOptions, Client, Collection};
 use serde::{Deserialize, Serialize};
 use serde_with::serde_as;
-use tera::Tera;
+use std::collections::VecDeque;
+use tera::{Tera, Value};
 use tower_http::services::ServeDir;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
@@ -60,14 +61,13 @@ async fn home(State(shared_state): State<Arc<SharedState>>) -> Response {
         .await
         .unwrap();
 
-    let mut pages: Vec<Page> = Vec::new();
+    let mut pages: VecDeque<Page> = VecDeque::new();
 
     while let Some(page) = cur.try_next().await.unwrap() {
-        pages.push(page)
+        pages.push_back(page)
     }
-    println!("{:?}", pages);
 
-    let homepage = pages.pop();
+    let homepage = pages.pop_front().unwrap();
 
     context.insert("pages", &pages);
     context.insert("homepage", &homepage);
@@ -90,9 +90,15 @@ async fn page(Path(slug): Path<String>, State(shared_state): State<Arc<SharedSta
         .unwrap();
 
     context.insert("page", &page);
+    context.insert("test", &page.published_at);
     let rendered = tera.render("page.html", &context).unwrap();
 
     Html(rendered).into_response()
+}
+
+pub fn todate(value: &Value, args: &HashMap<String, Value>) -> tera::Result<Value> {
+    println!("{}", value);
+    return Ok(value.clone());
 }
 
 #[tokio::main]
@@ -108,7 +114,8 @@ async fn main() {
     let mongo = Client::with_uri_str(env::var("DATABASE_URL").unwrap())
         .await
         .unwrap();
-    let tera = Tera::new("templates/**/*.html").unwrap();
+    let mut tera = Tera::new("templates/**/*.html").unwrap();
+    tera.register_filter("todate", todate);
 
     let shared_state = Arc::new(SharedState { tera, mongo });
 
@@ -117,6 +124,7 @@ async fn main() {
         .route("/", get(home))
         .route("/post/:slug", get(page))
         .nest_service("/assets", ServeDir::new("static"))
+        .nest_service("/images", ServeDir::new("static/images"))
         .nest("/admin", admin::admin_routes(shared_state.clone()))
         .layer(tower_http::trace::TraceLayer::new_for_http())
         .with_state(shared_state.clone());
