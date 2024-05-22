@@ -2,29 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.main-content {
+    a {
+        @apply underline hover:no-underline;
+    }
 
-.main-content>h1 {
-    @apply text-3xl;
-}
+    h2 {
+        @apply text-2xl;
+    }
 
-.main-content>h2 {
-    @apply text-2xl;
-}
-
-.main-content>h3 {
-    @apply text-xl;
-}
-
-.main-content>h4 {
-    @apply text-lg;
-}
-
-.main-content>a {
-    @apply underline;
-}
-
-.main-content>a:hover {
-    @apply no-underline;
+    h3 {
+        @apply text-xl;
+    }
 }
 
 pre code:not(.hljs) {

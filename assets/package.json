@@ -11,7 +11,7 @@
   "scripts": {
     "start": "npm run css & npm run js &",
     "css": "npx tailwindcss -i css/app.css -o ../static/app.css --watch",
-    "js": "npx esbuild --bundle js/app.ts --external:highlight.js --external:htmx.org --format=esm --watch > ../static/app.js"
+    "js": "rm ../static/app.js && npx esbuild --bundle js/app.ts --external:highlight.js --external:htmx.org --format=esm --watch > ../static/app.js"
   },
   "type": "module"
 }
