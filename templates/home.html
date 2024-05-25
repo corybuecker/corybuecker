@@ -18,7 +18,7 @@
 <h2 class="text-2xl">Older posts</h2>
 <ul>
     {% for page in pages %}
-    <li><a href="/post/{{page.slug}}">{{page.title}}</a></li>
+    <li><a class="underline hover:no-underline" href="/post/{{page.slug}}">{{page.title}}</a></li>
     {% endfor %}
 </ul>
 {% endblock content %}

@@ -20,15 +20,14 @@ pub async fn login(cookies: Cookies) -> Html<String> {
 
     let client_id = env::var("GOOGLE_CLIENT_ID").unwrap();
     let client_secret = env::var("GOOGLE_CLIENT_SECRET").unwrap();
+    let callback_url = env::var("GOOGLE_CALLBACK_URL").unwrap();
 
     let client = CoreClient::from_provider_metadata(
         provider_metadata,
         ClientId::new(client_id),
         Some(ClientSecret::new(client_secret)),
     )
-    .set_redirect_uri(
-        RedirectUrl::new("http://localhost:8000/admin/login/callback".to_string()).unwrap(),
-    );
+    .set_redirect_uri(RedirectUrl::new(callback_url).unwrap());
 
     let (auth_url, _, nonce) = client
         .authorize_url(
@@ -72,15 +71,14 @@ pub async fn callback(
 
     let client_id = env::var("GOOGLE_CLIENT_ID").unwrap();
     let client_secret = env::var("GOOGLE_CLIENT_SECRET").unwrap();
+    let callback_url = env::var("GOOGLE_CALLBACK_URL").unwrap();
 
     let client = CoreClient::from_provider_metadata(
         provider_metadata,
         ClientId::new(client_id),
         Some(ClientSecret::new(client_secret)),
     )
-    .set_redirect_uri(
-        RedirectUrl::new("http://localhost:8000/admin/login/callback".to_string()).unwrap(),
-    );
+    .set_redirect_uri(RedirectUrl::new(callback_url).unwrap());
 
     let key_base = env::var("SECRET_KEY").unwrap();
     let key = Key::from(key_base.as_bytes());
