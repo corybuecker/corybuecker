@@ -1,7 +1,8 @@
 use std::{collections::HashMap, env, sync::Arc};
 mod admin;
 use axum::{
-    extract::{Path, State},
+    extract::{MatchedPath, Path, State},
+    http::Request,
     response::{Html, IntoResponse, Response},
     routing::get,
     Router,
@@ -13,8 +14,9 @@ use serde_with::serde_as;
 use std::collections::VecDeque;
 use tera::{Tera, Value};
 use tower_http::services::ServeDir;
+use tower_http::trace::TraceLayer;
+use tracing::{info_span, Span};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
-
 pub struct SharedState {
     tera: Tera,
     mongo: Client,
@@ -72,6 +74,11 @@ async fn home(State(shared_state): State<Arc<SharedState>>) -> Response {
     context.insert("pages", &pages);
     context.insert("homepage", &homepage);
 
+    context.insert("description", &homepage.description);
+    let mut title = homepage.title.to_owned();
+    title.push_str(" - Cory Buecker");
+    context.insert("title", &title);
+
     let rendered = tera.render("home.html", &context).unwrap();
 
     Html(rendered).into_response()
@@ -91,6 +98,12 @@ async fn page(Path(slug): Path<String>, State(shared_state): State<Arc<SharedSta
 
     context.insert("page", &page);
     context.insert("test", &page.published_at);
+
+    context.insert("description", &page.description);
+    let mut title = page.title.to_owned();
+    title.push_str(" - Cory Buecker");
+    context.insert("title", &title);
+
     let rendered = tera.render("page.html", &context).unwrap();
 
     Html(rendered).into_response()
@@ -105,8 +118,11 @@ pub fn todate(value: &Value, args: &HashMap<String, Value>) -> tera::Result<Valu
 async fn main() {
     tracing_subscriber::registry()
         .with(
-            tracing_subscriber::EnvFilter::try_from_default_env()
-                .unwrap_or_else(|_| "example_tokio_postgres=debug".into()),
+            tracing_subscriber::EnvFilter::try_from_default_env().unwrap_or_else(|_| {
+                // axum logs rejections from built-in extractors with the `axum::rejection`
+                // target, at `TRACE` level. `axum::rejection=trace` enables showing those events
+                "blog=debug,tower_http=debug,axum::rejection=trace".into()
+            }),
         )
         .with(tracing_subscriber::fmt::layer())
         .init();
@@ -126,7 +142,21 @@ async fn main() {
         .nest_service("/assets", ServeDir::new("static"))
         .nest_service("/images", ServeDir::new("static/images"))
         .nest("/admin", admin::admin_routes(shared_state.clone()))
-        .layer(tower_http::trace::TraceLayer::new_for_http())
+        .layer(
+            TraceLayer::new_for_http().make_span_with(|request: &Request<_>| {
+                let matched_path = request
+                    .extensions()
+                    .get::<MatchedPath>()
+                    .map(MatchedPath::as_str);
+
+                info_span!(
+                    "http_request",
+                    method = ?request.method(),
+                    matched_path,
+                    some_other_field = tracing::field::Empty,
+                )
+            }),
+        )
         .with_state(shared_state.clone());
 
     // run it
