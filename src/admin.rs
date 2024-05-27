@@ -22,7 +22,7 @@ struct User {
 
 #[derive(Debug)]
 enum AuthenticationError {
-    NoEmail,
+    _NoEmail,
 }
 
 async fn require_authentication(

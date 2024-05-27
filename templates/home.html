@@ -5,7 +5,6 @@
     {% set published_at_long = homepage.published_at["$date"]["$numberLong"] | int %}
     {% set published_at = published_at_long / 1000 %}
     <time datetime="{{published_at | date}}">{{published_at | date}}</time>
-
     {% if page.revised_at %}
     {% set revised_at_long = homepage.revised_at["$date"]["$numberLong"] | int %}
     {% set revised_at = revised_at_long / 1000 %}

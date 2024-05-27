@@ -14,24 +14,25 @@
   {% endif %}
 
   <!--
-    JSPM Generator Import Map
-    Edit URL: https://generator.jspm.io/#jc5BDsIgEAVQFsbEy4C4c9erDIgwdQpmhhq68uq2BzCZxV/9l/x/Phlz+ZrYeAtriq/EpmAutKfbWSbv7d1eHWFwu0l/S4KaV8hJXAApChZFFOrRjktPJM1yIhzICjjDByQyvrsC14x1KNwGC5nSl2Eb5+kQ/vYDs5IwhF4B
-  -->
+  JSPM Generator Import Map
+  Edit URL: https://generator.jspm.io/#jc4xDsIwDAXQDIiBw6SEja1XcYJJXNykitMqnbg67QGQPHj6T//7ejHm9jWh1N2vGD5YTaKY+LhmJxmds097H5j8cBj8GzLkuEJEGTxIUrAgolCvcr70JtYsI1OnqoATbCCh0tIUOEfKXeEWBsoNu6Zzh5lNanO3pcbxFO7xA+jbLruKAQ
+-->
   <script type="importmap">
-    {
-      "imports": {
-        "highlight.js/lib/core": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/core.js",
-        "highlight.js/lib/languages/bash": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/bash.js",
-        "highlight.js/lib/languages/css": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/css.js",
-        "highlight.js/lib/languages/dockerfile": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/dockerfile.js",
-        "highlight.js/lib/languages/elixir": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/elixir.js",
-        "highlight.js/lib/languages/javascript": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/javascript.js",
-        "highlight.js/lib/languages/nginx": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/nginx.js",
-        "highlight.js/lib/languages/yaml": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/yaml.js",
-        "htmx.org": "https://ga.jspm.io/npm:htmx.org@1.9.12/dist/htmx.min.js"
-      }
+  {
+    "imports": {
+      "highlight.js/lib/core": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/core.js",
+      "highlight.js/lib/languages/bash": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/bash.js",
+      "highlight.js/lib/languages/css": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/css.js",
+      "highlight.js/lib/languages/dockerfile": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/dockerfile.js",
+      "highlight.js/lib/languages/elixir": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/elixir.js",
+      "highlight.js/lib/languages/javascript": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/javascript.js",
+      "highlight.js/lib/languages/nginx": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/nginx.js",
+      "highlight.js/lib/languages/plaintext": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/plaintext.js",
+      "highlight.js/lib/languages/yaml": "https://ga.jspm.io/npm:highlight.js@11.9.0/es/languages/yaml.js",
+      "htmx.org": "https://ga.jspm.io/npm:htmx.org@1.9.12/dist/htmx.min.js"
     }
-    </script>
+  }
+  </script>
 
   <!-- ES Module Shims: Import maps polyfill for older browsers without import maps support (eg Safari 16.3) -->
   <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"
@@ -40,7 +41,7 @@
   <link rel="stylesheet" href="/assets/app.css">
 </head>
 
-<body>
+<body hx-on::after-swap="afterBoostSwap()">
   <div class="container mx-auto">
     <div class="flex flex-wrap">
       <header class="basis-3/12 grow">
