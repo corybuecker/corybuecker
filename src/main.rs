@@ -1,9 +1,9 @@
-use std::{collections::HashMap, env, sync::Arc};
+use std::{env, str::FromStr, sync::Arc};
 mod admin;
 use axum::{
     extract::{MatchedPath, Path, State},
     http::Request,
-    response::{Html, IntoResponse, Response},
+    response::{Html, IntoResponse, Redirect, Response},
     routing::get,
     Router,
 };
@@ -12,10 +12,10 @@ use mongodb::{bson::doc, options::FindOptions, Client, Collection};
 use serde::{Deserialize, Serialize};
 use serde_with::serde_as;
 use std::collections::VecDeque;
-use tera::{Tera, Value};
+use tera::Tera;
 use tower_http::services::ServeDir;
 use tower_http::trace::TraceLayer;
-use tracing::{info_span, Span};
+use tracing::info_span;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 pub struct SharedState {
     tera: Tera,
@@ -108,21 +108,18 @@ async fn page(Path(slug): Path<String>, State(shared_state): State<Arc<SharedSta
 
     Html(rendered).into_response()
 }
-
-pub fn todate(value: &Value, args: &HashMap<String, Value>) -> tera::Result<Value> {
-    println!("{}", value);
-    return Ok(value.clone());
+async fn remove_slash(Path(slug): Path<String>) -> Redirect {
+    let mut redirect = String::from("/post/");
+    redirect.push_str(&slug);
+    return Redirect::permanent(&redirect);
 }
 
 #[tokio::main]
 async fn main() {
     tracing_subscriber::registry()
         .with(
-            tracing_subscriber::EnvFilter::try_from_default_env().unwrap_or_else(|_| {
-                // axum logs rejections from built-in extractors with the `axum::rejection`
-                // target, at `TRACE` level. `axum::rejection=trace` enables showing those events
-                "blog=debug,tower_http=debug,axum::rejection=trace".into()
-            }),
+            tracing_subscriber::EnvFilter::try_from_default_env()
+                .unwrap_or_else(|_| "blog=debug,tower_http=debug,axum::rejection=trace".into()),
         )
         .with(tracing_subscriber::fmt::layer())
         .init();
@@ -130,14 +127,13 @@ async fn main() {
     let mongo = Client::with_uri_str(env::var("DATABASE_URL").unwrap())
         .await
         .unwrap();
-    let mut tera = Tera::new("templates/**/*.html").unwrap();
-    tera.register_filter("todate", todate);
+    let tera = Tera::new("templates/**/*.html").unwrap();
 
     let shared_state = Arc::new(SharedState { tera, mongo });
 
-    // build our application with some routes
     let app = Router::new()
         .route("/", get(home))
+        .route("/post/:slug/", get(remove_slash))
         .route("/post/:slug", get(page))
         .nest_service("/assets", ServeDir::new("static"))
         .nest_service("/images", ServeDir::new("static/images"))
@@ -159,10 +155,7 @@ async fn main() {
         )
         .with_state(shared_state.clone());
 
-    // run it
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:8000")
-        .await
-        .unwrap();
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
 
     axum::serve(listener, app).await.unwrap();
 }
