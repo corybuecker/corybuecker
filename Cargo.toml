@@ -11,7 +11,7 @@ bson = { version = "2.11.0", features = ["chrono-0_4", "serde_with-3"] }
 chrono = "0.4.38"
 comrak = "0.24.1"
 futures = "0.3.28"
-log = "0.4.21"
+log = "0.4.22"
 mongodb = "3.0.0"
 openidconnect = { version = "3.5.0", features = ["reqwest"] }
 serde = "1.0.202"
